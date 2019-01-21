@@ -1,0 +1,100 @@
+<div class="container">
+  <!-- Trigger the modal with a button -->
+  <button type="button" (click)=openModal() class="btn btn-info btn-sm create-project-btn"><i class="fa fa-plus plus-icon"></i>Create
+    Project</button>
+</div>
+
+<div class="backdrop" [ngStyle]="{'display':display}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+  <div class="modal-dialog modal-lg" role="dialog">
+    <div class="modal-content">
+      <!-- <div class="">
+          <div class="text-center">
+            <h6 class="title">Create Project</h6>
+          </div>
+      </div> -->
+      <!-- <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div> -->
+      <div class="container">
+        <form class="m-3" [formGroup]="createProject">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" placeholder="Enter name" id="name" formControlName="name">
+              </div>
+            </div>
+            <!--  col-md-6   -->
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="label">Label</label>
+                <input type="text" class="form-control" placeholder="Enter Label" id="label" formControlName="label">
+              </div>
+            </div>
+            <!--  col-md-6   -->
+          </div>
+
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="app-context">App Context</label>
+                <input type="text" class="form-control" placeholder="Enter App Context" id="app-context" formControlName="appContext">
+              </div>
+
+
+            </div>
+            <!--  col-md-6   -->
+
+            <div class="col-md-6">
+
+              <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" rows="1" id="description" placeholder="description" formControlName="description"></textarea>
+                <!-- <input type="tel" class="form-control" id="description" placeholder="description"> -->
+              </div>
+            </div>
+            <!--  col-md-6   -->
+          </div>
+          <!--  row   -->
+
+
+          <div class="row">
+            <div class="col-md-6">
+
+              <div class="form-group">
+                <label for="primary-language">Primary Language</label>
+                <select class="form-control" id="primary-language" formControlName="primaryLanguage">
+                  <option value="">select primary language</option>
+                </select>
+              </div>
+            </div>
+            <!--  col-md-6   -->
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="secondary-language">Secondary Language</label>
+                <select class="form-control" id="secondary-language" formControlName="secondaryLanguage">
+                  <option value="">select secondary language</option>
+                </select>
+              </div>
+
+            </div>
+            <!--  col-md-6   -->
+          </div>
+          <!--  row   -->
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div class="form-group">
+          <button type="button" class="btn button-create" (click)="projectCreate()">Create</button>
+          <button type="button" class="btn button-close" (click)="onCloseHandled()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
