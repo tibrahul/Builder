@@ -3,11 +3,18 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "ng serve --proxy-config proxy.config.json",
     "test": "ng test",
+    "server": "npm run server",
+    "server:dev": "webpack-dev-server --config config/webpack.dev.js --progress --profile --watch --content-base src/",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "webpack-dev-server": "webpack-dev-server",
+    "webpack": "webpack",
+    "e2e": "ng e2e",
+    "extract": "ng xi18n --outputPath=src/locale",
+    "build:ta": "ng build --aot --output-path dist/ta --base-href /ta/ --i18nFile=src/locale/messages.ta.xlf --i18nFormat=xlf --i18n-locale=ta",
+    "build": "ng build --aot --output-path dist/en --base-href /en/",
+    "build:es": "ng build --aot --output-path dist/es --base-href /es/ --i18nFile=src/locale/messages.es.xlf --i18nFormat=xlf --i18n-locale=es"
   },
   "private": true,
   "dependencies": {
@@ -19,12 +26,27 @@
     "@angular/platform-browser": "~7.1.0",
     "@angular/platform-browser-dynamic": "~7.1.0",
     "@angular/router": "~7.1.0",
+    "angular-i18next": "^5.0.6",
+    "angular-validation-message": "^1.1.0",
+    "angular-validation-message-i18next": "^1.1.0",
     "bootstrap": "^4.2.1",
+    "copy-webpack-plugin": "^4.2.0",
     "core-js": "^2.5.4",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "script-ext-html-webpack-plugin": "^1.8.8",
     "font-awesome": "^4.7.0",
+    "html-webpack-plugin": "^2.21.0",
+    "i18next": "^14.0.1",
+    "i18next-browser-languagedetector": "^2.2.4",
+    "i18next-localstorage-backend": "^1.1.4",
+    "i18next-xhr-backend": "^1.5.1",
+    "json-loader": "^0.5.7",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
-    "zone.js": "~0.8.26"
+    "webpack-dev-middleware": "^3.5.1",
+    "zone.js": "~0.8.26",
+    "v8-lazy-parse-webpack-plugin": "^0.3.0",
+    "assets-webpack-plugin": "^3.5.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.11.0",
@@ -34,6 +56,7 @@
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
+    "awesome-typescript-loader": "^3.3.0",
     "codelyzer": "~4.5.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
@@ -43,8 +66,13 @@
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "~5.4.0",
+    "script-ext-html-webpack-plugin": "^1.8.8",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
-    "typescript": "~3.1.6"
+    "typescript": "~3.1.6",
+    "webpack": "^4.29.0",
+    "webpack-cli": "^3.2.1",
+    "webpack-dev-server": "^3.1.4",
+    "webpack-merge": "^4.1.2"
   }
 }

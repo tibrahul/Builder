@@ -57,6 +57,52 @@
                   "maximumError": "5mb"
                 }
               ]
+            },
+            "production-ta": {
+              "optimization": true,
+              "outputHashing": "all",
+              "outputPath": "dist/browser/ta/",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "baseHref": "/ta/",
+              "i18nFile": "src/locale/messages.ta.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "ta",
+              "i18nMissingTranslation": "error"
+            },
+            "production-es": {
+              "optimization": true,
+              "outputHashing": "all",
+              "outputPath": "dist/browser/es/",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "baseHref": "/es/",
+              "i18nFile": "src/locale/messages.es.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "es",
+              "i18nMissingTranslation": "error"
             }
           }
         },
@@ -68,6 +114,12 @@
           "configurations": {
             "production": {
               "browserTarget": "GeppettoBuilder:build:production"
+            },
+            "ta": {
+              "browserTarget": "GeppettoBuilder:build:production-ta"
+            },
+            "es": {
+              "browserTarget": "GeppettoBuilder:build:production-es"
             }
           }
         },
@@ -90,7 +142,7 @@
             "scripts": [],
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets/locales"
             ]
           }
         },

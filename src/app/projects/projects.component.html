@@ -1,9 +1,28 @@
 <div class="container">
+    <p class="lead">{{ 'intro' | i18next }}</p>
   <!-- Trigger the modal with a button -->
-  <button type="button" (click)=openModal() class="btn btn-info btn-sm create-project-btn"><i class="fa fa-plus plus-icon"></i>Create
-    Project</button>
+  <button type="button" i18n="@@createProjectBtn" (click)=openModal() class="btn btn-info btn-sm create-project-btn"><i class="fa fa-plus plus-icon"></i>Create Project</button>
 </div>
-
+<div class="container" *ngIf="project">
+    <div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">{{name}}</div>
+            <div class="card-body">
+              <div><span>{{description}}</span></div>
+                <button type="button" class="btn btn-primary btn-space pull-right">Edit</button>
+                <button type="button" class="btn btn-danger btn-space pull-right">Delete</button>
+            </div> 
+            <!-- <div class="card-footer">Footer</div> -->
+          </div>
+      <!-- <div class="card-counter primary">
+        <i class="fa fa-code-fork"></i>
+        <span class="count-numbers">12</span>
+        <span class="count-name">Flowz</span>
+      </div> -->
+    </div>
+  </div>
+</div>
 <div class="backdrop" [ngStyle]="{'display':display}"></div>
 <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
   <div class="modal-dialog modal-lg" role="dialog">
@@ -22,16 +41,24 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" class="form-control" placeholder="Enter name" id="name" formControlName="name">
+                <label for="name" i18n="@@name">Name</label>
+                <input type="text" class="form-control" i18n-placeholder="@@placeholder-name" placeholder="Enter name" id="name" formControlName="name"
+                  [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+                <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                  <div *ngIf="f.name.errors.required">Name is required</div>
+                </div>
               </div>
             </div>
             <!--  col-md-6   -->
 
             <div class="col-md-6">
               <div class="form-group">
-                <label for="label">Label</label>
-                <input type="text" class="form-control" placeholder="Enter Label" id="label" formControlName="label">
+                <label for="label" i18n="@@label">Label</label>
+                <input type="text" class="form-control" i18n-placeholder="@@placeholder-label" placeholder="Enter Label" id="label" formControlName="label"
+                  [ngClass]="{ 'is-invalid': submitted && f.label.errors }">
+                <div *ngIf="submitted && f.label.errors" class="invalid-feedback">
+                  <div *ngIf="f.label.errors.required">Label is required</div>
+                </div>
               </div>
             </div>
             <!--  col-md-6   -->
@@ -41,8 +68,12 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="app-context">App Context</label>
-                <input type="text" class="form-control" placeholder="Enter App Context" id="app-context" formControlName="appContext">
+                <label for="app-context" i18n="@@appContext">App Context</label>
+                <input type="text" class="form-control" i18n-placeholder="@@placeholder-appContext" placeholder="Enter App Context" id="app-context"
+                  formControlName="appContext" [ngClass]="{ 'is-invalid': submitted && f.appContext.errors }">
+                <div *ngIf="submitted && f.appContext.errors" class="invalid-feedback">
+                  <div *ngIf="f.appContext.errors.required">App Context is required</div>
+                </div>
               </div>
 
 
@@ -52,9 +83,12 @@
             <div class="col-md-6">
 
               <div class="form-group">
-                <label for="description">Description</label>
-                <textarea class="form-control" rows="1" id="description" placeholder="description" formControlName="description"></textarea>
-                <!-- <input type="tel" class="form-control" id="description" placeholder="description"> -->
+                <label for="description" i18n="@@description">Description</label>
+                <textarea class="form-control" rows="1" id="description"  i18n-placeholder="@@placeholder-description" placeholder="description" formControlName="description"
+                  [ngClass]="{ 'is-invalid': submitted && f.description.errors }"></textarea>
+                <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                  <div *ngIf="f.description.errors.required">Description is required</div>
+                </div>
               </div>
             </div>
             <!--  col-md-6   -->
@@ -66,33 +100,41 @@
             <div class="col-md-6">
 
               <div class="form-group">
-                <label for="primary-language">Primary Language</label>
-                <select class="form-control" id="primary-language" formControlName="primaryLanguage">
-                  <option value="">select primary language</option>
+                <label for="primary-language" i18n="@@primaryLanguage">Primary Language</label>
+                <select class="form-control" id="primary-language" formControlName="primaryLanguage" [ngClass]="{ 'is-invalid': submitted && f.primaryLanguage.errors }">
+                  <option value="" selected>select primary language</option>
+                  <option value="english">English</option>
+                  <option value="tamil">Tamil</option>
+                  <option value="spanish">Spanish</option>
                 </select>
+                <!-- <div *ngIf="submitted && f.primaryLanguage.errors" class="invalid-feedback">
+                  <div *ngIf="f.primaryLanguage.errors.required">Primary Language is required</div>
+                </div> -->
               </div>
             </div>
             <!--  col-md-6   -->
 
             <div class="col-md-6">
               <div class="form-group">
-                <label for="secondary-language">Secondary Language</label>
+                <label for="secondary-language" i18n="@@secondaryLanguage">Secondary Language</label>
                 <select class="form-control" id="secondary-language" formControlName="secondaryLanguage">
-                  <option value="">select secondary language</option>
+                  <option value="" selected  >select secondary language</option>
+                  <option *ngFor="let c of languages" [ngValue]="c">{{ c }}</option>
                 </select>
+                <!-- <div *ngIf="submitted  && f.secondaryLanguage.errors" class="invalid-feedback">
+                  <div *ngIf="f.secondaryLanguage.errors.required">Secondary Language is required</div>
+                </div> -->
               </div>
-
             </div>
             <!--  col-md-6   -->
           </div>
           <!--  row   -->
-
         </form>
       </div>
       <div class="modal-footer">
         <div class="form-group">
-          <button type="button" class="btn button-create" (click)="projectCreate()">Create</button>
-          <button type="button" class="btn button-close" (click)="onCloseHandled()">Cancel</button>
+          <button type="button" class="btn button-create" (click)="projectCreate()" i18n="@@createBtn">Create</button>
+          <button type="button" class="btn button-close" (click)="onCloseHandled()" i18n="@@cancelBtn">Cancel</button>
         </div>
       </div>
     </div>
