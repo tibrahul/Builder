@@ -1,0 +1,17 @@
+﻿{
+    "application_title": "Geppetto Builder",
+    "create_project": "crear proyecto",
+    "name":"nombre",
+    "label":"etiqueta",
+    "app_context":"contexto de la aplicación",
+    "description":"descripción",
+    "primary_language":"lenguaje primario",
+    "secondary_language":"lengua secundaria",
+    "cancel":"cancelar",
+    "create":"crear",
+    "_languages": {
+        "en": "English",
+        "ta": "தமிழ்",
+        "es": "Español"
+    }
+}

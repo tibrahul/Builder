@@ -5,14 +5,12 @@ import { Component, ViewEncapsulation, Inject } from '@angular/core';
   selector: 'header-language',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './header.language.component.html',
-  styles: [`
-    
-  `]
+  styleUrls: ['./header.language.component.scss']
 })
 export class HeaderLanguageComponent {
 
-  language: string = 'ru';
-  languages: string[] = ['ru', 'en'];
+  language: string = 'en';
+  languages: string[] = ['en','ta','es'];
 
   constructor(
     @Inject(I18NEXT_SERVICE) private i18NextService: ITranslationService
@@ -23,8 +21,7 @@ export class HeaderLanguageComponent {
     this.i18NextService.events.initialized.subscribe((e) => {
       if (e) {
         this.updateState(this.i18NextService.language);
-        console.log('udhaya test',this.i18NextService.language)
-      }
+     }
     });
   }
 

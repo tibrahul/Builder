@@ -1,7 +1,6 @@
 <div class="container">
-    <p class="lead">{{ 'intro' | i18next }}</p>
   <!-- Trigger the modal with a button -->
-  <button type="button" i18n="@@createProjectBtn" (click)=openModal() class="btn btn-info btn-sm create-project-btn"><i class="fa fa-plus plus-icon"></i>Create Project</button>
+  <button type="button" i18n="@@createProjectBtn" (click)=openModal() class="btn btn-info btn-sm create-project-btn"><i class="fa fa-plus plus-icon"></i>{{ 'create_project' | i18next }}</button>
 </div>
 <div class="container" *ngIf="project">
     <div class="row">
@@ -41,7 +40,7 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="name" i18n="@@name">Name</label>
+                <label for="name">{{ 'name' | i18next }}</label>
                 <input type="text" class="form-control" i18n-placeholder="@@placeholder-name" placeholder="Enter name" id="name" formControlName="name"
                   [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
                 <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
@@ -53,7 +52,7 @@
 
             <div class="col-md-6">
               <div class="form-group">
-                <label for="label" i18n="@@label">Label</label>
+                <label for="label" i18n="@@label">{{ 'label' | i18next }}</label>
                 <input type="text" class="form-control" i18n-placeholder="@@placeholder-label" placeholder="Enter Label" id="label" formControlName="label"
                   [ngClass]="{ 'is-invalid': submitted && f.label.errors }">
                 <div *ngIf="submitted && f.label.errors" class="invalid-feedback">
@@ -68,7 +67,7 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="app-context" i18n="@@appContext">App Context</label>
+                <label for="app-context" i18n="@@appContext">{{ 'app_context' | i18next }}</label>
                 <input type="text" class="form-control" i18n-placeholder="@@placeholder-appContext" placeholder="Enter App Context" id="app-context"
                   formControlName="appContext" [ngClass]="{ 'is-invalid': submitted && f.appContext.errors }">
                 <div *ngIf="submitted && f.appContext.errors" class="invalid-feedback">
@@ -83,7 +82,7 @@
             <div class="col-md-6">
 
               <div class="form-group">
-                <label for="description" i18n="@@description">Description</label>
+                <label for="description" i18n="@@description">{{ 'description' | i18next }}</label>
                 <textarea class="form-control" rows="1" id="description"  i18n-placeholder="@@placeholder-description" placeholder="description" formControlName="description"
                   [ngClass]="{ 'is-invalid': submitted && f.description.errors }"></textarea>
                 <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
@@ -100,7 +99,7 @@
             <div class="col-md-6">
 
               <div class="form-group">
-                <label for="primary-language" i18n="@@primaryLanguage">Primary Language</label>
+                <label for="primary-language" i18n="@@primaryLanguage">{{ 'primary_language' | i18next }}</label>
                 <select class="form-control" id="primary-language" formControlName="primaryLanguage" [ngClass]="{ 'is-invalid': submitted && f.primaryLanguage.errors }">
                   <option value="" selected>select primary language</option>
                   <option value="english">English</option>
@@ -116,7 +115,7 @@
 
             <div class="col-md-6">
               <div class="form-group">
-                <label for="secondary-language" i18n="@@secondaryLanguage">Secondary Language</label>
+                <label for="secondary-language" i18n="@@secondaryLanguage">{{ 'secondary_language' | i18next }}</label>
                 <select class="form-control" id="secondary-language" formControlName="secondaryLanguage">
                   <option value="" selected  >select secondary language</option>
                   <option *ngFor="let c of languages" [ngValue]="c">{{ c }}</option>
@@ -133,8 +132,8 @@
       </div>
       <div class="modal-footer">
         <div class="form-group">
-          <button type="button" class="btn button-create" (click)="projectCreate()" i18n="@@createBtn">Create</button>
-          <button type="button" class="btn button-close" (click)="onCloseHandled()" i18n="@@cancelBtn">Cancel</button>
+          <button type="button" class="btn button-create" (click)="projectCreate()" i18n="@@createBtn">{{ 'create' | i18next }}</button>
+          <button type="button" class="btn button-close" (click)="onCloseHandled()" i18n="@@cancelBtn">{{ 'cancel' | i18next }}</button>
         </div>
       </div>
     </div>

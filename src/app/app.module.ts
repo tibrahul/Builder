@@ -13,18 +13,18 @@ import * as i18nextLanguageDetector from 'i18next-browser-languagedetector';
 import { ValidationMessageModule } from 'angular-validation-message';
 import { I18NextValidationMessageModule } from 'angular-validation-message-i18next';
 import { HeaderLanguageComponent } from './header-controls/header.language.component';
+import { DetectBrowserComponent } from './detect-browser/detect-browser.component';
 
 // var option = { resGetPath: 'locales/__lng__/__ns__.json' };
 const i18nextOptions = {
-  whitelist: ['en', 'ru'],
+  whitelist: ['en','ta','es'],
   fallbackLng: 'en',
   debug: true, // set debug?
   returnEmptyString: false,
   ns: [
-    'translation'
-    // 'validation',
-    // 'error',
-
+    'translation',
+    'validation',
+    'error'
     // 'feature.rich_form'
   ],
   interpolation: {
@@ -36,28 +36,36 @@ const i18nextOptions = {
     loadPath: function(langs, ns) { 
       console.log(langs)
       console.log(ns)
-      return 'locales/{{lng}}.{{ns}}.json';
+      return 'assets/locales/{{lng}}/{{ns}}.json';
     }
    
   },
-  // load(languages, namespaces, callback) {
-  //   this.prepareLoading(languages, namespaces, {}, callback);
-  // },
-  // lang detection plugin options
   detection: {
-    // order and from where user language should be detected
-    order: ['cookie'],
-
-    // keys or params to lookup language from
-    lookupCookie: 'lang',
-
-    // cache user language on
-    caches: ['cookie'],
+    order: ['querystring', 'cookie', 'localStorage', 'navigator', 'htmlTag', 'path', 'subdomain'],
+    
+      // keys or params to lookup language from
+      lookupQuerystring: 'lng',
+      lookupCookie: 'i18next',
+      lookupLocalStorage: 'i18nextLng',
+      lookupFromPathIndex: 0,
+      lookupFromSubdomainIndex: 0,
+    
+      // cache user language on
+      caches: ['cookie'],
+      excludeCacheFor: ['cimode'], // languages to not persist (cookie, localStorage)
+    
+      // optional expire and domain for set cookie
+      cookieMinutes: 10,
+      cookieDomain: 'myDomain',
+    
+      // optional htmlTag with lang attribute, the default is:
+      htmlTag: document.documentElement
   }
 };
 
 export function appInit(i18next: ITranslationService) {
   return () => {
+    console.log(i18nextLanguageDetector)
     let promise: Promise<I18NextLoadResult> = i18next
       .use(i18nextXHRBackend)
       .use(i18nextLanguageDetector)
@@ -67,6 +75,7 @@ export function appInit(i18next: ITranslationService) {
 }
 
 export function localeIdFactory(i18next: ITranslationService)  {
+  console.log("checkudhaya",i18next.language)
   return i18next.language;
 }
 
@@ -90,7 +99,8 @@ export const I18N_PROVIDERS = [
     ProjectsComponent,
     HeaderComponent,
     FooterComponent,
-    HeaderLanguageComponent
+    HeaderLanguageComponent,
+    DetectBrowserComponent
   ],
   imports: [
     BrowserModule,
@@ -107,5 +117,5 @@ export const I18N_PROVIDERS = [
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(public appRef: ApplicationRef) {}
+  constructor(public appRef: ApplicationRef) { }
  }
