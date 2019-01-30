@@ -4,10 +4,14 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
     "test": "ng test",
+    "server": "npm run server",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "extract": "ng xi18n --outputPath=src/locale",
+    "build:ta": "ng build --aot --output-path dist/ta --base-href /ta/ --i18nFile=src/locale/messages.ta.xlf --i18nFormat=xlf --i18n-locale=ta",
+    "build": "ng build --aot --output-path dist/en --base-href /en/",
+    "build:es": "ng build --aot --output-path dist/es --base-href /es/ --i18nFile=src/locale/messages.es.xlf --i18nFormat=xlf --i18n-locale=es"
   },
   "private": true,
   "dependencies": {
@@ -19,9 +23,16 @@
     "@angular/platform-browser": "~7.1.0",
     "@angular/platform-browser-dynamic": "~7.1.0",
     "@angular/router": "~7.1.0",
+    "angular-i18next": "^5.0.6",
+    "angular-validation-message": "^1.1.0",
+    "angular-validation-message-i18next": "^1.1.0",
     "bootstrap": "^4.2.1",
     "core-js": "^2.5.4",
+    "detect-browser": "^4.0.4",
     "font-awesome": "^4.7.0",
+    "i18next": "^14.0.1",
+    "i18next-browser-languagedetector": "^2.2.4",
+    "i18next-xhr-backend": "^1.5.1",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"
