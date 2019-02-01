@@ -71,19 +71,9 @@ export class ProjectsComponent implements OnInit {
   languages: string[] = ['English', 'Tamil', 'Spanish'];
 
   submitted = false;
-  // sub: Subscription = <Subscription>{
-  //   name: '',
-  //   label: '',
-  //   appContext: '',
-  //   description: '',
-  //   primaryLanguage: '',
-  //   secondaryLanguage: '',
-  // };
   constructor(private formBuilder: FormBuilder, private data: AppComponentService, private projectsService: ProjectsService) { }
 
   ngOnInit() {
-    this.data.currentMessage.subscribe(message => this.message = message)
-    this.data.currentSubject.subscribe(message => this.messageSub = message)
     this.projectDetails();
     this.createProject = this.formBuilder.group({
       name: ['', Validators.required],
@@ -143,12 +133,5 @@ export class ProjectsComponent implements OnInit {
       this.description = data.description;
       this.name = data.name;
     }
-  }
-  newMessage() {
-    this.data.changeMessage("Hello from Sibling")
-  }
-  newMessageSub() {
-    console.log("i am in sub")
-    this.data.changeSub('Hello i am from sub sibling')
   }
 }

@@ -1,8 +1,4 @@
 <div class="container">
-  <p>{{message}}</p>
-  <p>{{messageSub}}</p>
-  <button (click)="newMessage()" class="space">New Message</button>
-  <button (click)="newMessageSub()">New Message Subject</button>
   <!-- Trigger the modal with a button -->
   <button type="button" i18n="@@createProjectBtn" (click)=openModal() class="btn btn-info btn-sm create-project-btn"><i class="fa fa-plus plus-icon"></i>{{ 'create_project' | i18next }}</button>
 </div>
@@ -16,13 +12,7 @@
                 <button type="button" class="btn btn-primary btn-space pull-right">Edit</button>
                 <button type="button" class="btn btn-danger btn-space pull-right">Delete</button>
             </div> 
-            <!-- <div class="card-footer">Footer</div> -->
           </div>
-      <!-- <div class="card-counter primary">
-        <i class="fa fa-code-fork"></i>
-        <span class="count-numbers">12</span>
-        <span class="count-name">Flowz</span>
-      </div> -->
     </div>
   </div>
 </div>
