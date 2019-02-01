@@ -7,6 +7,7 @@ import { ProjectsComponent } from './projects/projects.component';
 import { I18NEXT_SERVICE, I18NextLoadResult, I18NextModule, ITranslationService, defaultInterpolationFormat,
 I18NEXT_NAMESPACE } from 'angular-i18next';
 import { HttpClientModule } from  '@angular/common/http';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { APP_INITIALIZER, ApplicationRef, LOCALE_ID } from '@angular/core';
 import * as i18nextXHRBackend from 'i18next-xhr-backend';
 import * as i18nextLanguageDetector from 'i18next-browser-languagedetector';
@@ -75,13 +76,14 @@ export const I18N_PROVIDERS = [
     AppComponent,
     ProjectsComponent,
     HeaderLanguageComponent,
-    GenerationFlowsComponent
+    GenerationFlowsComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    DragDropModule,
     I18NextModule.forRoot(),
     ValidationMessageModule,
     HttpClientModule,
