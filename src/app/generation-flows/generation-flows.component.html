@@ -1,9 +1,23 @@
 <div>
   <h1 style="text-align: center;"> <u>Backend Flow </u> </h1>
 </div>
-<div>
-    <select class="" id="">
-        <option value="" selected ></option>
-        <option *ngFor="let fl of flows" [ngValue]="fl">{{ fl }}</option>
+<!-- <div>
+    <select data-placeholder="Begin typing a name to filter..." multiple class="chosen-select">
+        <option value="" selected >Select</option>
+        <option value="" *ngFor="let fl of flows">{{ fl.name }}</option>
       </select>
-</div>
+</div> -->
+
+<ng-multiselect-dropdown
+  [placeholder]="'custom placeholder'"
+  [data]="flows"
+  [(ngModel)]="selectedItems"
+  [settings]="dropdownSettings"
+  (onSelect)="onItemSelect($event)"
+  (onSelectAll)="onSelectAll($event)"
+>
+</ng-multiselect-dropdown>
+
+<div cdkDropList (cdkDropListDropped)="onDrop($event)">
+    <div class="box" *ngFor="let item of items" cdkDrag>{{item}}</div>
+  </div>

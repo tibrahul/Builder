@@ -1,54 +1,63 @@
 {
     "flow":[
-        {
+        {   
+            "id":1,
             "name": "GpCreate",
             "label": "Save",
             "description": "creates a noun",
             "action_on_data": "GpCreate"
         },
         {
+            "id":2,
             "name": "GpUpdate",
             "label": "Update",
             "description": "updates a noun",
             "action_on_data": "GpUpdate"
         },
         {
+            "id":3,
             "name": "GpDelete",
             "label": "Delete",
             "description": "deletes a noun",
             "action_on_data": "GpDelete"
         },
         {
+            "id":4,
             "name": "GpSearch",
             "label": "Search",
             "description": "searches a noun",
             "action_on_data": "GpSearch"
         },
         {
+            "id":5,
             "name": "GpSearchForUpdate",
             "label": "Search for update",
             "description": "special search for locking a noun",
             "action_on_data": "GpSearchForUpdate"
         },
         {
+            "id":6,
             "name": "GpGetAllValues",
             "label": "Get All Records",
             "description": "special search that gets all values",
             "action_on_data": "GpGetAllValues"
         },
         {
+            "id":7,
             "name": "GpDeleteByParentId",
             "label": "Delete by parent id",
             "description": "delete noun by parent id",
             "action_on_data": "GpDeleteByParentId"
         },
         {
+            "id":8,
             "name": "GpTakePhoto",
             "label": "Take photo",
             "description": "takes photo",
             "action_on_data": "GpTakePhoto"
         },
         {
+            "id":9,
             "name": "GpRecordVideo",
             "label": "Take video",
             "description": "takes video",
