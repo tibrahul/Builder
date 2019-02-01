@@ -14,6 +14,7 @@ import { ValidationMessageModule } from 'angular-validation-message';
 import { I18NextValidationMessageModule } from 'angular-validation-message-i18next';
 import { HeaderLanguageComponent } from './header-controls/header.language.component';
 import { DetectBrowserComponent } from './detect-browser/detect-browser.component';
+import { GenerationFlowsComponent } from './generation-flows/generation-flows.component';
 
 // var option = { resGetPath: 'locales/__lng__/__ns__.json' };
 const i18nextOptions = {
@@ -100,7 +101,8 @@ export const I18N_PROVIDERS = [
     HeaderComponent,
     FooterComponent,
     HeaderLanguageComponent,
-    DetectBrowserComponent
+    DetectBrowserComponent,
+    GenerationFlowsComponent
   ],
   imports: [
     BrowserModule,
