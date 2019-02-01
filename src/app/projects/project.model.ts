@@ -1,5 +1,4 @@
 export interface  project {
-
     name: any;
     label: any;
     description: any ;
@@ -45,5 +44,4 @@ export interface  project {
     lotus_notes_cred_enabled: any;
     user_deployment_target: any;
     server_deployment_target: any; 
-
 }

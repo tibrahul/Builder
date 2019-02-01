@@ -1,22 +1,26 @@
 <div class="container">
-  <!-- Trigger the modal with a button -->
-  <button type="button" i18n="@@createProjectBtn" (click)=openModal() class="btn btn-info btn-sm create-project-btn"><i class="fa fa-plus plus-icon"></i>{{ 'create_project' | i18next }}</button>
+  <button type="button" i18n="@@createProjectBtn" (click)=openModal() class="btn btn-info btn-sm pull-right">
+    <i class="fa fa-plus plus-icon"></i>{{ 'create_project' | i18next }}
+  </button>
 </div>
+
 <div class="container" *ngIf="project">
-    <div class="row">
+  <div class="row">
     <div class="col-md-4">
-        <div class="card">
-            <div class="card-header">{{name}}</div>
-            <div class="card-body">
-              <div><span>{{description}}</span></div>
-                <button type="button" class="btn btn-primary btn-space pull-right">Edit</button>
-                <button type="button" class="btn btn-danger btn-space pull-right">Delete</button>
-            </div> 
-          </div>
+      <div class="card">
+        <div class="card-header">{{name}}</div>
+        <div class="card-body">
+          <div><span>{{description}}</span></div>
+          <button type="button" class="btn btn-primary btn-space pull-right">Edit</button>
+          <button type="button" class="btn btn-danger btn-space pull-right">Delete</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+
 <div class="backdrop" [ngStyle]="{'display':display}"></div>
+
 <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
   <div class="modal-dialog modal-lg" role="dialog">
     <div class="modal-content">
@@ -26,8 +30,8 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="name">{{ 'name' | i18next }}</label>
-                <input type="text" class="form-control" placeholder="{{'placeholder_name' | i18next}}" id="name" formControlName="name"
-                  [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+                <input type="text" class="form-control" placeholder="{{'placeholder_name' | i18next}}" id="name"
+                  formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
                 <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
                   <div *ngIf="f.name.errors.required">{{'require_name' | i18next}}</div>
                 </div>
@@ -38,8 +42,8 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="label">{{ 'label' | i18next }}</label>
-                <input type="text" class="form-control" placeholder="{{'placeholder_label' | i18next}}" id="label" formControlName="label"
-                  [ngClass]="{ 'is-invalid': submitted && f.label.errors }">
+                <input type="text" class="form-control" placeholder="{{'placeholder_label' | i18next}}" id="label"
+                  formControlName="label" [ngClass]="{ 'is-invalid': submitted && f.label.errors }">
                 <div *ngIf="submitted && f.label.errors" class="invalid-feedback">
                   <div *ngIf="f.label.errors.required">{{'require_label' | i18next}}</div>
                 </div>
@@ -68,8 +72,8 @@
 
               <div class="form-group">
                 <label for="description">{{ 'description' | i18next }}</label>
-                <textarea class="form-control" rows="1" id="description" placeholder="{{'placeholder_description' | i18next}}" formControlName="description"
-                  [ngClass]="{ 'is-invalid': submitted && f.description.errors }"></textarea>
+                <textarea class="form-control" rows="1" id="description" placeholder="{{'placeholder_description' | i18next}}"
+                  formControlName="description" [ngClass]="{ 'is-invalid': submitted && f.description.errors }"></textarea>
                 <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
                   <div *ngIf="f.description.errors.required">{{'require_description' | i18next}}</div>
                 </div>
@@ -102,7 +106,7 @@
               <div class="form-group">
                 <label for="secondary-language">{{ 'secondary_language' | i18next }}</label>
                 <select class="form-control" id="secondary-language" formControlName="secondaryLanguage" [ngClass]="{ 'is-invalid': submitted && f.secondaryLanguage.errors }">
-                  <option value="" selected  >{{'select_secondary' | i18next}}</option>
+                  <option value="" selected>{{'select_secondary' | i18next}}</option>
                   <option *ngFor="let c of languages" [ngValue]="c">{{ c }}</option>
                 </select>
                 <div *ngIf="submitted && f.secondaryLanguage.errors" class="invalid-feedback">

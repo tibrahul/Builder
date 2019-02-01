@@ -11,7 +11,7 @@ import { project } from '../projects/project.model'
 })
 @Injectable()
 export class ProjectsComponent implements OnInit {
-  private projectInterface : project = {
+  private projectInterface: project = {
     name: '',
     label: '',
     description: '',
@@ -78,12 +78,9 @@ export class ProjectsComponent implements OnInit {
     this.createProject = this.formBuilder.group({
       name: ['', Validators.required],
       label: ['', Validators.required],
-      // appContext: ['', Validators.required],
       appContext: '',
-      // description: ['', Validators.required],
       description: '',
       primaryLanguage: ['', Validators.required],
-      // secondaryLanguage: ['', Validators.required],
       secondaryLanguage: [''],
     });
   }
@@ -96,7 +93,9 @@ export class ProjectsComponent implements OnInit {
     this.createProject.clearValidators();
     this.createProject.reset();
   }
+
   get f() { return this.createProject.controls; }
+
   projectCreate() {
     this.submitted = true;
     if (this.createProject.invalid) {
@@ -110,13 +109,13 @@ export class ProjectsComponent implements OnInit {
     this.projectInterface.description = this.createProject.value.description;
     this.projectInterface.default_human_language = this.createProject.value.primaryLanguage;
     this.projectInterface.other_human_languages = this.createProject.value.secondaryLanguage;
-    console.log("hello udhaya",this.projectInterface)
+    console.log("hello udhaya", this.projectInterface)
     this.projectsService.addProject(this.projectInterface).subscribe(data => {
       console.log("data", data);
     },
-    error => {
-      console.log('Check the browser console to see more info.','Error!');
-    });
+      error => {
+        console.log('Check the browser console to see more info.', 'Error!');
+      });
     localStorage.setItem('project', JSON.stringify(this.projectInterface));
     this.onCloseHandled();
     this.projectDetails();
