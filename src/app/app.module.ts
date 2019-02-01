@@ -16,6 +16,7 @@ import { HeaderLanguageComponent } from './header-controls/header.language.compo
 import sprintf from 'i18next-sprintf-postprocessor';
 import { ProjectsService } from './projects/projects.service';
 import { AppComponentService } from './app.component.service';
+import { GenerationFlowsComponent } from './generation-flows/generation-flows.component';
 
 const i18nextOptions = {
   whitelist: ['en', 'ta', 'es'],
@@ -74,6 +75,7 @@ export const I18N_PROVIDERS = [
     AppComponent,
     ProjectsComponent,
     HeaderLanguageComponent,
+    GenerationFlowsComponent
   ],
   imports: [
     BrowserModule,
