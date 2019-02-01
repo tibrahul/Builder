@@ -1,4 +1,8 @@
 <div class="container">
+  <p>{{message}}</p>
+  <p>{{messageSub}}</p>
+  <button (click)="newMessage()" class="space">New Message</button>
+  <button (click)="newMessageSub()">New Message Subject</button>
   <!-- Trigger the modal with a button -->
   <button type="button" i18n="@@createProjectBtn" (click)=openModal() class="btn btn-info btn-sm create-project-btn"><i class="fa fa-plus plus-icon"></i>{{ 'create_project' | i18next }}</button>
 </div>
@@ -26,25 +30,16 @@
 <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
   <div class="modal-dialog modal-lg" role="dialog">
     <div class="modal-content">
-      <!-- <div class="">
-          <div class="text-center">
-            <h6 class="title">Create Project</h6>
-          </div>
-      </div> -->
-      <!-- <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-      </div> -->
       <div class="container">
         <form class="m-3" [formGroup]="createProject">
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
                 <label for="name">{{ 'name' | i18next }}</label>
-                <input type="text" class="form-control" i18n-placeholder="@@placeholder-name" placeholder="Enter name" id="name" formControlName="name"
+                <input type="text" class="form-control" placeholder="{{'placeholder_name' | i18next}}" id="name" formControlName="name"
                   [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
                 <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
-                  <div *ngIf="f.name.errors.required">Name is required</div>
+                  <div *ngIf="f.name.errors.required">{{'require_name' | i18next}}</div>
                 </div>
               </div>
             </div>
@@ -52,11 +47,11 @@
 
             <div class="col-md-6">
               <div class="form-group">
-                <label for="label" i18n="@@label">{{ 'label' | i18next }}</label>
-                <input type="text" class="form-control" i18n-placeholder="@@placeholder-label" placeholder="Enter Label" id="label" formControlName="label"
+                <label for="label">{{ 'label' | i18next }}</label>
+                <input type="text" class="form-control" placeholder="{{'placeholder_label' | i18next}}" id="label" formControlName="label"
                   [ngClass]="{ 'is-invalid': submitted && f.label.errors }">
                 <div *ngIf="submitted && f.label.errors" class="invalid-feedback">
-                  <div *ngIf="f.label.errors.required">Label is required</div>
+                  <div *ngIf="f.label.errors.required">{{'require_label' | i18next}}</div>
                 </div>
               </div>
             </div>
@@ -67,11 +62,11 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="app-context" i18n="@@appContext">{{ 'app_context' | i18next }}</label>
-                <input type="text" class="form-control" i18n-placeholder="@@placeholder-appContext" placeholder="Enter App Context" id="app-context"
+                <label for="app-context">{{ 'app_context' | i18next }}</label>
+                <input type="text" class="form-control" placeholder="{{'placeholder_appContext' | i18next}}" id="app-context"
                   formControlName="appContext" [ngClass]="{ 'is-invalid': submitted && f.appContext.errors }">
                 <div *ngIf="submitted && f.appContext.errors" class="invalid-feedback">
-                  <div *ngIf="f.appContext.errors.required">App Context is required</div>
+                  <div *ngIf="f.appContext.errors.required">{{'require_appContext' | i18next}}</div>
                 </div>
               </div>
 
@@ -82,11 +77,11 @@
             <div class="col-md-6">
 
               <div class="form-group">
-                <label for="description" i18n="@@description">{{ 'description' | i18next }}</label>
-                <textarea class="form-control" rows="1" id="description"  i18n-placeholder="@@placeholder-description" placeholder="description" formControlName="description"
+                <label for="description">{{ 'description' | i18next }}</label>
+                <textarea class="form-control" rows="1" id="description" placeholder="{{'placeholder_description' | i18next}}" formControlName="description"
                   [ngClass]="{ 'is-invalid': submitted && f.description.errors }"></textarea>
                 <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
-                  <div *ngIf="f.description.errors.required">Description is required</div>
+                  <div *ngIf="f.description.errors.required">{{'require_description' | i18next}}</div>
                 </div>
               </div>
             </div>
@@ -99,30 +94,30 @@
             <div class="col-md-6">
 
               <div class="form-group">
-                <label for="primary-language" i18n="@@primaryLanguage">{{ 'primary_language' | i18next }}</label>
+                <label for="primary-language">{{ 'primary_language' | i18next }}</label>
                 <select class="form-control" id="primary-language" formControlName="primaryLanguage" [ngClass]="{ 'is-invalid': submitted && f.primaryLanguage.errors }">
-                  <option value="" selected>select primary language</option>
+                  <option value="" selected>{{'select_primary' | i18next}}</option>
                   <option value="english">English</option>
                   <option value="tamil">Tamil</option>
                   <option value="spanish">Spanish</option>
                 </select>
-                <!-- <div *ngIf="submitted && f.primaryLanguage.errors" class="invalid-feedback">
-                  <div *ngIf="f.primaryLanguage.errors.required">Primary Language is required</div>
-                </div> -->
+                <div *ngIf="submitted && f.primaryLanguage.errors" class="invalid-feedback">
+                  <div *ngIf="f.primaryLanguage.errors.required">{{'require_primaryLanguage' | i18next}}</div>
+                </div>
               </div>
             </div>
             <!--  col-md-6   -->
 
             <div class="col-md-6">
               <div class="form-group">
-                <label for="secondary-language" i18n="@@secondaryLanguage">{{ 'secondary_language' | i18next }}</label>
-                <select class="form-control" id="secondary-language" formControlName="secondaryLanguage">
-                  <option value="" selected  >select secondary language</option>
+                <label for="secondary-language">{{ 'secondary_language' | i18next }}</label>
+                <select class="form-control" id="secondary-language" formControlName="secondaryLanguage" [ngClass]="{ 'is-invalid': submitted && f.secondaryLanguage.errors }">
+                  <option value="" selected  >{{'select_secondary' | i18next}}</option>
                   <option *ngFor="let c of languages" [ngValue]="c">{{ c }}</option>
                 </select>
-                <!-- <div *ngIf="submitted  && f.secondaryLanguage.errors" class="invalid-feedback">
-                  <div *ngIf="f.secondaryLanguage.errors.required">Secondary Language is required</div>
-                </div> -->
+                <div *ngIf="submitted && f.secondaryLanguage.errors" class="invalid-feedback">
+                  <div *ngIf="f.secondaryLanguage.errors.required">{{'require_secondaryLanguage' | i18next}}</div>
+                </div>
               </div>
             </div>
             <!--  col-md-6   -->
@@ -132,8 +127,8 @@
       </div>
       <div class="modal-footer">
         <div class="form-group">
-          <button type="button" class="btn button-create" (click)="projectCreate()" i18n="@@createBtn">{{ 'create' | i18next }}</button>
-          <button type="button" class="btn button-close" (click)="onCloseHandled()" i18n="@@cancelBtn">{{ 'cancel' | i18next }}</button>
+          <button type="button" class="btn button-create" (click)="projectCreate()">{{ 'create' | i18next }}</button>
+          <button type="button" class="btn button-close" (click)="onCloseHandled()">{{ 'cancel' | i18next }}</button>
         </div>
       </div>
     </div>
