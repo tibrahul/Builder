@@ -101,15 +101,12 @@ export class ProjectsComponent implements OnInit {
     if (this.createProject.invalid) {
       return;
     }
-    console.log(this.createProject.value.name)
-    console.log(this.projectInterface)
     this.projectInterface.name = this.createProject.value.name;
     this.projectInterface.label = this.createProject.value.label;
     this.projectInterface.extra_project_info = this.createProject.value.appContext;
     this.projectInterface.description = this.createProject.value.description;
     this.projectInterface.default_human_language = this.createProject.value.primaryLanguage;
     this.projectInterface.other_human_languages = this.createProject.value.secondaryLanguage;
-    console.log("hello udhaya", this.projectInterface)
     this.projectsService.addProject(this.projectInterface).subscribe(data => {
       console.log("data", data);
     },
