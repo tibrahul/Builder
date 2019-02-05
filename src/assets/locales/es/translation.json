@@ -21,7 +21,6 @@
     "require_appContext":"el contexto de la aplicación es obligatorio",
     "require_description":"se requiere descripción",
     "placeholder_label":"introducir etiqueta",
-    "browser_alert":"hello spanish",
     "_languages": {
         "en": "English",
         "ta": "தமிழ்",

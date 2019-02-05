@@ -1,49 +1,58 @@
-<div>
-  <h1 style="text-align: center;"> <u>Backend Flow </u> </h1>
+<div *ngIf="checkSelectedFlow">
+  <h1 style="text-align: center;"> <u>Flow Components</u> </h1>
 </div>
-<!-- <div>
-    <select data-placeholder="Begin typing a name to filter..." multiple class="chosen-select">
-        <option value="" selected >Select</option>
-        <option value="" *ngFor="let fl of flows">{{ fl.name }}</option>
-      </select>
-</div> -->
-<div class="row" style="margin: 0px;">
-  <div class="col-md-12" style="display: contents;">
-    <div class="col-md-3">
-      <div class="form-group">
-        <select class="form-control" (change)="selectFlow($event.target.value)">
-          <option selected>Select</option>
-          <option [value]="fl.name" *ngFor="let fl of dataFlow">{{fl.name}}</option>
-        </select>
-        <p>Selected Flow is: {{selectedFlow.name}}</p>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <ng-multiselect-dropdown [placeholder]="'Select Flow Components'" [data]="dataFlowComponent" [(ngModel)]="selectedItems"
-        [settings]="dropdownSettings" (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeSelect($event)"
-        (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onUnSelectAll($event)">
-      </ng-multiselect-dropdown>
-    </div>
-    <div class="col-md-3">
-      <button class="btn btn-primary button" (click)="saveGenFlow()">Save Flow</button>
-    </div>
-    <div class="col-md-3">
-      <div cdkDropList (cdkDropListDropped)="onDrop($event)" *ngIf="showMainContent">
-        <div class="box" *ngFor="let item of items" cdkDrag>{{item}}</div>
-      </div>
+<div *ngIf="!checkSelectedFlow && !checkSelectedMicroFlow">
+  <h1 style="text-align: center;"> <u>Flows</u> </h1>
+</div>
+<div *ngIf="checkSelectedMicroFlow">
+  <h1 style="text-align: center;"> <u>Micro Flows</u> </h1>
+</div>
+<div class="container">
+  <div class="row" style="margin: 0px;">
+    <div class="col-md-12" style="display: inline;">
+        <ag-grid-angular #agGrid style="width: 75%; height: 100%;" id="myGrid" class="ag-theme-balham" [columnDefs]="columnDefs"
+          [rowSelection]="rowSelection" [rowData]="rowData" (selectionChanged)="onSelectionChanged($event)" (gridReady)="onGridReady($event)"></ag-grid-angular>
+      <ng-multiselect-dropdown
+  [placeholder]="'custom placeholder'"
+  [data]="dataFlowComponent"
+  [(ngModel)]="selectedItems"
+  [settings]="dropdownSettings"
+  (onSelect)="onItemSelect($event)"
+  (onDeSelect)="onItemDeSelect($event)"
+  (onDeSelectAll)="onUnSelectAll($event)"
+  (onSelectAll)="onSelectAll($event)"
+>
+</ng-multiselect-dropdown>
+         <!-- <div *ngIf="checkSelectedFlow">
+        <div class="test-header">Selected Flow: <span>{{selectedFlow[0].name}}</span></div>
+        <ag-grid-angular #agGrid style="width: 73%; height: 100%;" id="myGrid" class="ag-theme-balham" [columnDefs]="columnDefs"
+          [rowSelection]="rowSelection" [rowData]="dataFlowComponent" (selectionChanged)="onSelectionFlowChanged($event)"
+          (gridReady)="onGridReady($event)"></ag-grid-angular>
+          </div> -->
+      <!-- <div *ngIf="checkSelectedMicroFlow">
+      <ag-grid-angular #agGrid style="width: 38%; height: 100%;" id="myGrid" class="ag-theme-balham" [columnDefs]="columnDefsMicroFlow"
+      [rowSelection]="rowSelection" [rowData]="rowDataMicroFlow" (selectionChanged)="onSelectionMicroFlowChanged($event)"       [rowMultiSelectWithClick]="true"
+      (gridReady)="onGridReady($event)"></ag-grid-angular>
+      </div> -->
     </div>
   </div>
 </div>
+
 <div class="row" style="margin: 0px;">
   <div class="col-md-12" style="display: contents;">
-    <div class="col-md-3" *ngFor="let gen of getGenFlow">
-      <div class="card">
-        <div class="card-header">{{gen.flow_name.name}}</div>
-        <div class="card-body" *ngFor="let comp of gen.flow_sequence">
-          <span>{{comp.name}}</span>
+    <div class="col-md-3">
+      <div class="card" *ngIf="checkSelectedMicroFlow && checkSelectedFlowComponent">
+        <div class="card-header">Flow: <span>{{selectedFlow[0].name}}</span></div>
+        <div class="card-body">
+          <h6><b>Flow Components</b></h6>
+          <span>{{selectedFlowComponents[0].name}}</span>
+        </div>
+        <div class="card-body">
+          <h6><b>Micro Flow</b></h6>
+          <span *ngFor="let micro of selectedMicroFlow">{{micro.name}}<br/></span>
         </div>
       </div>
     </div>
   </div>
-
 </div>
+  

@@ -19,6 +19,9 @@ import sprintf from 'i18next-sprintf-postprocessor';
 import { ProjectsService } from './projects/projects.service';
 import { AppComponentService } from './app.component.service';
 import { GenerationFlowsComponent } from './generation-flows/generation-flows.component';
+import {AgGridModule} from "ag-grid-angular";
+import { GeneratonFlowsService } from './generation-flows/generaton-flows.service';
+
 
 const i18nextOptions = {
   whitelist: ['en', 'ta', 'es'],
@@ -81,6 +84,7 @@ export const I18N_PROVIDERS = [
   ],
   imports: [
     BrowserModule,
+    AgGridModule.withComponents([]),
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
@@ -94,6 +98,7 @@ export const I18N_PROVIDERS = [
   ],
   providers: [
     AppComponentService,
+    GeneratonFlowsService,
     ProjectsService,
     I18N_PROVIDERS,
   ],
