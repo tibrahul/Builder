@@ -193,6 +193,10 @@ export class GenerationFlowsComponent implements OnInit {
     console.log(this.items)
   }
 
+  addFlowComponent(){
+    
+  }
+
   // onDrop(event: CdkDragDrop<string[]>) {
   //   moveItemInArray(this.items, event.previousIndex, event.currentIndex);
   // }
