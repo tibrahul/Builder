@@ -22,6 +22,7 @@ import { GenerationFlowsComponent } from './generation-flows/generation-flows.co
 import {AgGridModule} from "ag-grid-angular";
 import { GeneratonFlowsService } from './generation-flows/generaton-flows.service';
 import { ComponentFlowsComponent } from './component-flows/component-flows.component';
+import { ComponentFlowsService } from './component-flows/component-flows.service';
 
 
 const i18nextOptions = {
@@ -102,6 +103,7 @@ export const I18N_PROVIDERS = [
     AppComponentService,
     GeneratonFlowsService,
     ProjectsService,
+    ComponentFlowsService,
     I18N_PROVIDERS,
   ],
   bootstrap: [AppComponent]

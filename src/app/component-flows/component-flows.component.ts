@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GeneratonFlowsService } from '../generation-flows/generaton-flows.service';
-// import { ComponentFlowsService } from './component-flows.service';
+import { ComponentFlowsService } from './component-flows.service';
 
 @Component({
   selector: 'app-component-flows',
@@ -19,7 +19,7 @@ export class ComponentFlowsComponent implements OnInit {
   flow_component_sequence: any = [];
   selectedFlow: any = [];
   message: string;
-  constructor(private generatonFlowsService: GeneratonFlowsService) {
+  constructor(private generatonFlowsService: GeneratonFlowsService, private componentFlowsService: ComponentFlowsService) {
     this.columnDefs = [
       {headerName: 'Component Name', field: 'component_name'},
       {headerName: 'FrameWork', field: 'dev_framework'},
@@ -64,17 +64,18 @@ export class ComponentFlowsComponent implements OnInit {
       this.message = message
     });
   }
-  // getMicroFlowName() {
-  //   this.componentFlowsService.currentMessage.subscribe((message) => {
-  //     this.message = message
-  //   });
-  // }
+  getMicroFlowName() {
+  this.componentFlowsService.getMicroFlowByName(this.rowData.flow_comp_seq[0].component_name).subscribe((data)=>{
+    console.log("++++++++>>",data)
+  })
+  }
   onSelectionChanged(show) {
     var selectedRows = this.gridApi.getSelectedRows();
     this.selectedFlow = selectedRows;
     console.log(this.selectedFlow)
     this.generatonFlowsService.changeMessage(this.selectedFlow[0].component_name)
     console.log(this.selectedFlow[0].component_name)
+    this.getMicroFlowName();
     // this.router.navigate(['flow-component'],{ skipLocationChange: true });
   }
 
