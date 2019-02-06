@@ -41,10 +41,8 @@ export class ComponentFlowsComponent implements OnInit {
     ]
     this.rowSelection = "single";
     this.defaultColDef = {
-      enableRowGroup: true,
-      enablePivot: true,
       enableValue: true,
-      sortable: true,
+      // sortable: true,
       filter: true,
       resizable: true
     };
@@ -77,8 +75,9 @@ export class ComponentFlowsComponent implements OnInit {
       this.message = message
     });
   }
-  getMicroFlowName() {
-  this.componentFlowsService.getMicroFlowByName(this.rowData.flow_comp_seq[0].component_name).subscribe((data)=>{
+  getMicroFlowName(component) {
+  this.componentFlowsService.getMicroFlowByName(component).subscribe((data)=>{
+    console.log("+++++++++++++>>>>>>>>>>> component",this.rowData.flow_comp_seq[0].component_name)
     console.log("++++++++>>",data)
     if(data){
       this.showMicroFlow = true;
@@ -89,10 +88,10 @@ export class ComponentFlowsComponent implements OnInit {
   onSelectionChanged(show) {
     var selectedRows = this.gridApi.getSelectedRows();
     this.selectedFlow = selectedRows;
+    let dataComponent = this.selectedFlow[0].component_name
     console.log(this.selectedFlow)
-    this.generatonFlowsService.changeMessage(this.selectedFlow[0].component_name)
-    console.log(this.selectedFlow[0].component_name)
-    this.getMicroFlowName();
+    console.log("hello+++>>>:::::::++++++",this.selectedFlow[0].component_name)
+    this.getMicroFlowName(this.selectedFlow[0].component_name);
     // this.router.navigate(['flow-component'],{ skipLocationChange: true });
   }
 

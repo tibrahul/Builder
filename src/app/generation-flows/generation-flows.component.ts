@@ -17,34 +17,40 @@ export class GenerationFlowsComponent implements OnInit {
   }
   gridApi;
   gridColumnApi;
-  // dropdownSettings = {};
   getGenFlow: any;
-  // checkSelectedFlow = false;
-  // checkSelectedFlowComponent = false;
-  // checkSelectedMicroFlow = false;
-  // dropdownList = [];
-  // items = [];
   dataFlow: any;
   dataFlowComponent: any;
-  // showMainContent: Boolean = true;
   selectedFlow: any = [];
-  // selectedMicroFlow: any = [];
-  // selectedFlowComponents: any = [];
   rowSelection;
   rowData: any;
   columnDefs;
   message: string;
+  defaultColDef;
+  getRowNodeId;
 
   constructor(private generatonFlowsService: GeneratonFlowsService, private router: Router) {
     this.columnDefs = [
-      { headerName: 'Name', field: 'name'},
-      { headerName: 'Label', field: 'label'},
-      { headerName: 'Description', field: 'description'},
-      { headerName: 'Action', field: 'action_on_data'},
+      {
+        headerName: 'Name', field: 'name', 
+        // headerCheckboxSelection: true,
+        // headerCheckboxSelectionFilteredOnly: true,
+        checkboxSelection: true
+      },
+      { headerName: 'Label', field: 'label' },
+      { headerName: 'Description', field: 'description' },
+      { headerName: 'Action', field: 'action_on_data' },
+
 
     ];
     this.rowSelection = "single";
-    }
+    this.defaultColDef = {
+      enableValue: true,
+      // sortable: true,
+      filter: true,
+      resizable: true,
+      // editable: true,
+    };
+  }
 
   ngOnInit() {
     this.getFlow();
@@ -69,7 +75,7 @@ export class GenerationFlowsComponent implements OnInit {
   getFlow() {
     this.generatonFlowsService.getFlows().subscribe((flowData) => {
       this.dataFlow = flowData;
-      console.log("dataFlow",this.dataFlow)
+      console.log("dataFlow", this.dataFlow)
       this.rowData = flowData;
 
     });
@@ -115,7 +121,7 @@ export class GenerationFlowsComponent implements OnInit {
     var selectedRows = this.gridApi.getSelectedRows();
     this.selectedFlow = selectedRows;
     this.generatonFlowsService.changeMessage(this.selectedFlow[0].name)
-    this.router.navigate(['flow-component'],{ skipLocationChange: true });
+    // this.router.navigate(['flow-component'], { skipLocationChange: true });
   }
 
   // onSelectionMicroFlowChanged(show) {
