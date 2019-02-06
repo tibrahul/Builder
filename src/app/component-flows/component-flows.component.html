@@ -17,3 +17,21 @@
     </div>
   </div>
 </div>
+
+
+<div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <!-- <div>
+          <label>Selected Flow:</label>
+          <span>{{message}}</span>
+          <button class="btn btn-primary button">Add Component</button>
+        </div> -->
+        <div *ngIf = "showMicroFlow" style="margin:100px">
+        <ag-grid-angular #agGrid style="width: 100%; height: 100%;" id="myGrid" [defaultColDef]="defaultColDef"
+          [animateRows]="true" class="ag-theme-balham" [columnDefs]="microColDef" [rowSelection]="rowSelection" [rowData]="microFlow"
+          [rowSelection]="rowSelection" (selectionChanged)="onSelectionChanged($event)" (gridReady)="onGridMicroFlowReady($event)"></ag-grid-angular>
+      </div>
+      </div>
+    </div>
+  </div>

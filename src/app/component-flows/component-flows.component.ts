@@ -15,7 +15,10 @@ export class ComponentFlowsComponent implements OnInit {
   defaultColDef;
   gridApi;
   data: any = [];
+  microFlow: any = [];
   gridColumnApi;
+  showMicroFlow = false;
+  microColDef;
   flow_component_sequence: any = [];
   selectedFlow: any = [];
   message: string;
@@ -31,6 +34,11 @@ export class ComponentFlowsComponent implements OnInit {
       
 
     ];
+    this.microColDef = [
+      {headerName:'sequence_id',field: 'sequence_id'},
+    {headerName:'component_name',field: 'component_name'},
+    {headerName:'micro_flow_step_name',field:'micro_flow_step_name'}
+    ]
     this.rowSelection = "single";
     this.defaultColDef = {
       enableRowGroup: true,
@@ -59,6 +67,11 @@ export class ComponentFlowsComponent implements OnInit {
     this.gridColumnApi = params.columnApi;
     // this.gridApi.sizeColumnsToFit();
   }
+  onGridMicroFlowReady(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+    this.gridApi.sizeColumnsToFit();
+  }
   getFlowName() {
     this.generatonFlowsService.currentMessage.subscribe((message) => {
       this.message = message
@@ -67,6 +80,10 @@ export class ComponentFlowsComponent implements OnInit {
   getMicroFlowName() {
   this.componentFlowsService.getMicroFlowByName(this.rowData.flow_comp_seq[0].component_name).subscribe((data)=>{
     console.log("++++++++>>",data)
+    if(data){
+      this.showMicroFlow = true;
+    }
+    this.microFlow = data 
   })
   }
   onSelectionChanged(show) {
