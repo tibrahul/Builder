@@ -1,4 +1,4 @@
-export class  project {
+export class project {
     name: any;
     label: any;
     description: any ;
