@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+// import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { GeneratonFlowsService } from './generaton-flows.service';
 import { generation_flow } from './generation-flows.model'
 import { Router } from '@angular/router';
-import * as microFLow from './micro-flow.json'
 
 @Component({
   selector: 'app-generation-flows',
@@ -18,84 +17,47 @@ export class GenerationFlowsComponent implements OnInit {
   }
   gridApi;
   gridColumnApi;
-  flowsequence = [];
-  dropdownSettings = {};
+  // dropdownSettings = {};
   getGenFlow: any;
-  checkSelectedFlow = false;
-  checkSelectedFlowComponent = false;
-  checkSelectedMicroFlow = false;
-  dropdownList = [];
-  items = [];
+  // checkSelectedFlow = false;
+  // checkSelectedFlowComponent = false;
+  // checkSelectedMicroFlow = false;
+  // dropdownList = [];
+  // items = [];
   dataFlow: any;
-  microFLowData: any = [];
   dataFlowComponent: any;
-  showMainContent: Boolean = true;
-  selectedGenFlow: any = [];
-  generationFlow: any = [];
+  // showMainContent: Boolean = true;
   selectedFlow: any = [];
-  showMicroFlow = false;
-  selectedMicroFlow: any = [];
-  selectedFlowComponents: any = [];
-  componetData: any;
-  columnDefsMicroFlow: any =[];
-  rowDataMicroFlow: any =[];
+  // selectedMicroFlow: any = [];
+  // selectedFlowComponents: any = [];
   rowSelection;
   rowData: any;
   columnDefs;
-  autoGroupColumnDef;
+  message: string;
 
   constructor(private generatonFlowsService: GeneratonFlowsService, private router: Router) {
     this.columnDefs = [
-      { headerName: 'Name', field: 'name', width: 400 },
-      { headerName: 'Description', field: 'description', width: 400 },
+      { headerName: 'Name', field: 'name'},
+      { headerName: 'Label', field: 'label'},
+      { headerName: 'Description', field: 'description'},
+      { headerName: 'Action', field: 'action_on_data'},
 
     ];
-    this.columnDefsMicroFlow = [
-      { headerName: 'Name', field: 'name', width: 400 },
-    ];
-    this.rowDataMicroFlow = [
-      { name: 'GpStart'},
-      { name: 'GpValidate'},
-      { name: 'GpServerPost'},
-      { name: 'GpServerResponse'},
-      { name: 'GpDisplayServerResponse'},
-      { name: 'GpTransition'},
-      { name: 'GpEnd'},
-      { name: 'GpDeclareNoun'},
-      { name: 'GpServiceCall'},
-      { name: 'GpReturn'},
-      { name: 'GpDaoCall'},
-      { name: 'GpConfirm'},
-      { name: 'GpMessage_Instantiation'},
-      { name: 'GpJpaQuery'},
-      { name: 'GpQueryExecuteSt'},
-      { name: 'GpArrayListDeclare'},
-      { name: 'GpException'},
-      { name: 'GpVariable_statement'},
-      { name: 'GpService_call'},
-      { name: 'GpVerbKey'},
-      { name: 'GpSqlQuery'},
-      { name: 'GpHeaders'},
-      { name: 'GpOptons'},
-      { name: 'GpCodeToAdd'},
-      { name: 'GpRequest'},
-
-    ];
-    this.rowSelection = "multiple";
-  }
+    this.rowSelection = "single";
+    }
 
   ngOnInit() {
-    console.log("hello micro flow", microFLow)
     this.getFlow();
     this.getFlowComp();
     this.getAllGenFlow();
-    this.dropdownSettings = {
-      singleSelection: false,
-      idField: '_id',
-      textField: 'name',
-      itemsShowLimit: 3,
-      allowSearchFilter: true
-    };
+    // this.generatonFlowsService.currentMessage.subscribe(message => this.message = message)
+    // this.dropdownSettings = {
+    //   singleSelection: false,
+    //   idField: '_id',
+    //   textField: 'name',
+    //   itemsShowLimit: 3,
+    //   allowSearchFilter: true
+    // };
   }
 
   getFlowComp() {
@@ -107,21 +69,22 @@ export class GenerationFlowsComponent implements OnInit {
   getFlow() {
     this.generatonFlowsService.getFlows().subscribe((flowData) => {
       this.dataFlow = flowData;
+      console.log("dataFlow",this.dataFlow)
       this.rowData = flowData;
 
     });
   }
 
-  addFlow() {
-    this.generatonFlowsService.addGenFlow(this.generation_flow).subscribe(data => {
-      console.log("data", data);
-      this.getAllGenFlow();
-      this.showMainContent = false
-    },
-      error => {
-        console.log('Check the browser console to see more info.', 'Error!');
-      });
-  }
+  // addFlow() {
+  //   this.generatonFlowsService.addGenFlow(this.generation_flow).subscribe(data => {
+  //     console.log("data", data);
+  //     this.getAllGenFlow();
+  //     this.showMainContent = false
+  //   },
+  //     error => {
+  //       console.log('Check the browser console to see more info.', 'Error!');
+  //     });
+  // }
 
   getAllGenFlow() {
     this.generatonFlowsService.getGenFlow().subscribe((getGenFlow) => {
@@ -129,31 +92,30 @@ export class GenerationFlowsComponent implements OnInit {
     });
   }
 
-  onItemSelect(item: any) {
-    this.items.push(item.name)
-    console.log(this.items)
-  }
+  // onItemSelect(item: any) {
+  //   this.items.push(item.name)
+  //   console.log(this.items)
+  // }
 
-  onSelectAll(items: any) {
-    console.log("items", items)
-    items.forEach((data) => {
-      this.items.push(data.name)
-    });
-    console.log("drag and drop", this.items)
-  }
+  // onSelectAll(items: any) {
+  //   console.log("items", items)
+  //   items.forEach((data) => {
+  //     this.items.push(data.name)
+  //   });
+  //   console.log("drag and drop", this.items)
+  // }
 
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
+    this.gridApi.sizeColumnsToFit();
   }
 
   onSelectionChanged(show) {
     var selectedRows = this.gridApi.getSelectedRows();
     this.selectedFlow = selectedRows;
-    if (this.selectedFlow.length === 1) {
-      this.checkSelectedFlow = true;
-    }
-    // this.router.navigate(['flow-component'],{ skipLocationChange: true });
+    this.generatonFlowsService.changeMessage(this.selectedFlow[0].name)
+    this.router.navigate(['flow-component'],{ skipLocationChange: true });
   }
 
   // onSelectionMicroFlowChanged(show) {
@@ -179,23 +141,16 @@ export class GenerationFlowsComponent implements OnInit {
   //   }
   // }
 
-  empty() {
-    this.dataFlowComponent = [];
-  }
 
-  onUnSelectAll(items: any) {
-    this.items = items;
-  }
+  // onUnSelectAll(items: any) {
+  //   this.items = items;
+  // }
 
-  onItemDeSelect(item) {
-    let index = this.items.indexOf(item.name)
-    this.items.splice(index, 1)
-    console.log(this.items)
-  }
-
-  addFlowComponent(){
-    
-  }
+  // onItemDeSelect(item) {
+  //   let index = this.items.indexOf(item.name)
+  //   this.items.splice(index, 1)
+  //   console.log(this.items)
+  // }
 
   // onDrop(event: CdkDragDrop<string[]>) {
   //   moveItemInArray(this.items, event.previousIndex, event.currentIndex);

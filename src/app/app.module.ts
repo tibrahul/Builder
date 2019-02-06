@@ -21,6 +21,7 @@ import { AppComponentService } from './app.component.service';
 import { GenerationFlowsComponent } from './generation-flows/generation-flows.component';
 import {AgGridModule} from "ag-grid-angular";
 import { GeneratonFlowsService } from './generation-flows/generaton-flows.service';
+import { ComponentFlowsComponent } from './component-flows/component-flows.component';
 
 
 const i18nextOptions = {
@@ -81,6 +82,7 @@ export const I18N_PROVIDERS = [
     ProjectsComponent,
     HeaderLanguageComponent,
     GenerationFlowsComponent,
+    ComponentFlowsComponent,
   ],
   imports: [
     BrowserModule,

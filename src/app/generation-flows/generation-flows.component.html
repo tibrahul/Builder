@@ -1,18 +1,19 @@
-<div *ngIf="checkSelectedFlow">
+<!-- <div *ngIf="checkSelectedFlow">
   <h1 style="text-align: center;"> <u>Flow Components</u> </h1>
-</div>
-<div *ngIf="!checkSelectedFlow && !checkSelectedMicroFlow">
+</div> -->
+<div>
   <h1 style="text-align: center;"> <u>Flows</u> </h1>
 </div>
-<div *ngIf="checkSelectedMicroFlow">
+<!-- <div *ngIf="checkSelectedMicroFlow">
   <h1 style="text-align: center;"> <u>Micro Flows</u> </h1>
-</div>
+</div> -->
 <div class="container">
-  <div class="row" style="margin: 0px;">
-    <div class="col-md-12" style="display: inline;">
-        <ag-grid-angular #agGrid style="width: 75%; height: 100%;" id="myGrid" class="ag-theme-balham" [columnDefs]="columnDefs"
-          [rowSelection]="rowSelection" [rowData]="rowData" (selectionChanged)="onSelectionChanged($event)" (gridReady)="onGridReady($event)"></ag-grid-angular>
-      <ng-multiselect-dropdown
+  <div class="row">
+    <div class="col-md-12">
+      <ag-grid-angular #agGrid style="width: 100%; height: 100%;" id="myGrid" class="ag-theme-balham" [columnDefs]="columnDefs"
+        [rowSelection]="rowSelection" [rowData]="rowData"  [rowSelection]="rowSelection" (selectionChanged)="onSelectionChanged($event)"
+        (gridReady)="onGridReady($event)"></ag-grid-angular>
+      <!-- <ng-multiselect-dropdown
   [placeholder]="'custom placeholder'"
   [data]="dataFlowComponent"
   [(ngModel)]="selectedItems"
@@ -22,9 +23,9 @@
   (onDeSelectAll)="onUnSelectAll($event)"
   (onSelectAll)="onSelectAll($event)"
 >
-</ng-multiselect-dropdown>
-<button class="btn btn-primary" (click)="addFlowComponent">Add Flow Conponent</button>
-         <!-- <div *ngIf="checkSelectedFlow">
+</ng-multiselect-dropdown> -->
+      <!-- <button class="btn btn-primary" (click)="addFlowComponent">Add Flow Conponent</button> -->
+      <!-- <div *ngIf="checkSelectedFlow">
         <div class="test-header">Selected Flow: <span>{{selectedFlow[0].name}}</span></div>
         <ag-grid-angular #agGrid style="width: 73%; height: 100%;" id="myGrid" class="ag-theme-balham" [columnDefs]="columnDefs"
           [rowSelection]="rowSelection" [rowData]="dataFlowComponent" (selectionChanged)="onSelectionFlowChanged($event)"
@@ -50,10 +51,9 @@
         </div>
         <div class="card-body">
           <h6><b>Micro Flow</b></h6>
-          <span *ngFor="let micro of selectedMicroFlow">{{micro.name}}<br/></span>
+          <span *ngFor="let micro of selectedMicroFlow">{{micro.name}}<br /></span>
         </div>
       </div>
     </div>
   </div>
 </div>
-  
