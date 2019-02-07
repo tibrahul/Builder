@@ -10,10 +10,11 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 const flowUrl = 'http://localhost:3001/flow/getall';
+const flowServiceURL = 'http://localhost:3001/flow/';
 const compUrl = 'http://localhost:3001/flow_component/getall';
-const addGenFlow = 'http://localhost:3001/IGenerateFlow/add';
-const getGenFlow = 'http://localhost:3001/IGenerateFlow/getall';
-const getCompByName = 'http://localhost:3001/IGenerateFlow/getbyname';
+const addGenFlow = 'http://localhost:3001/generation_flow/add';
+const getGenFlow = 'http://localhost:3001/generation_flow/getall';
+const getCompByName = 'http://localhost:3001/generation_flow/getbyname';
 const getMFByName = 'http://localhost:3002/microflow/getbycomp';
 
 @Injectable({
@@ -36,7 +37,15 @@ export class FlowManagerService {
 
 
   saveFlow(flowObject: IFlow): Observable<IFlow> {
-    return this.http.post<IFlow>(flowUrl, flowObject)
+    return this.http.post<IFlow>(flowServiceURL + 'save', flowObject)
+      .pipe(
+        tap(heroes => console.log('fetched projects')),
+        catchError(this.handleError('getprojects', this.flow))
+      );
+  }
+
+  deleteFlow(flowID: String): Observable<any> {
+    return this.http.delete(flowServiceURL + `delete/${flowID}`)
       .pipe(
         tap(heroes => console.log('fetched projects')),
         catchError(this.handleError('getprojects', this.flow))

@@ -91,6 +91,24 @@ export class FlowManagerComponent implements OnInit {
     });
   }
 
+  routeNextPage() {
+    this.router.navigate(['flow-component'], { skipLocationChange: true });
+  }
+
+  onGridReady(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+    this.gridApi.sizeColumnsToFit();
+  }
+
+  onSelectionChanged(show) {
+    // const selectedRows = this.gridApi.getSelectedRows();
+    this.selectedFlow = this.gridApi.getSelectedRows();
+    console.log('selected flow values are ------ ', this.selectedFlow);
+    this.flowManagerService.changeMessage(this.selectedFlow[0].name);
+    // this.router.navigate(['flow-component'], { skipLocationChange: true });
+  }
+
   openModal() {
     this.displayModel = 'block';
   }
@@ -104,10 +122,15 @@ export class FlowManagerComponent implements OnInit {
   createFlowModel() {
     console.log('test values are ---------- ', this.createFlowForm.getRawValue());
     // const createFlow = {
-      this.flowManagerService.saveFlow(this.createFlowForm.getRawValue())
+    this.flowManagerService.saveFlow(this.createFlowForm.getRawValue())
       .subscribe(
         (data) => {
-       console.log('successfully added gen flow -- ', data);
+          console.log('successfully added gen flow -- ', data);
+          this.displayModel = 'none';
+          // this.submitted = false;
+          this.createFlowForm.clearValidators();
+          this.createFlowForm.reset();
+          this.getAllGenFlow();
         },
         (error) => {
           console.log('add gen flow error --- ', error);
@@ -116,21 +139,23 @@ export class FlowManagerComponent implements OnInit {
 
     // }
   }
-  // addFlow() {
-  //   this.flowManagerService.addGenFlow(this.generation_flow).subscribe(data => {
-  //     console.log("data", data);
-  //     this.getAllGenFlow();
-  //     this.showMainContent = false
-  //   },
-  //     error => {
-  //       console.log('Check the browser console to see more info.', 'Error!');
-  //     });
-  // }
-
   getAllGenFlow() {
     this.flowManagerService.getGenFlow().subscribe((getGenFlow) => {
       this.getGenFlow = getGenFlow;
     });
+  }
+
+  deleteRow() {
+    // console.log('delete row flow manager ----- ', this.s)
+    this.flowManagerService.deleteFlow(this.selectedFlow[0]._id).subscribe(
+      (data) => {
+        console.log('delete flow manager -- ', data);
+        this.getAllGenFlow();
+      },
+      (error) => {
+        console.log('error delete flow manager --- ', error);
+      }
+    );
   }
 
   // onItemSelect(item: any) {
@@ -146,18 +171,7 @@ export class FlowManagerComponent implements OnInit {
   //   console.log("drag and drop", this.items)
   // }
 
-  onGridReady(params) {
-    this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
-    this.gridApi.sizeColumnsToFit();
-  }
 
-  onSelectionChanged(show) {
-    const selectedRows = this.gridApi.getSelectedRows();
-    this.selectedFlow = selectedRows;
-    this.flowManagerService.changeMessage(this.selectedFlow[0].name);
-    this.router.navigate(['flow-component'], { skipLocationChange: true });
-  }
 
   // onSelectionMicroFlowChanged(show) {
   //   var selectedRows = this.gridApi.getSelectedRows();
