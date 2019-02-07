@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 // import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { GeneratonFlowsService } from './generaton-flows.service';
-import { generation_flow } from './generation-flows.model'
+import { generation_flow } from './generation-flows.model';
 import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
+import { IFlow } from './interface/flow';
 
 @Component({
   selector: 'app-generation-flows',
@@ -14,7 +17,7 @@ export class GenerationFlowsComponent implements OnInit {
   private generation_flow: generation_flow = {
     flow_name: '',
     flow_sequence: [],
-  }
+  };
   gridApi;
   gridColumnApi;
   getGenFlow: any;
@@ -28,10 +31,14 @@ export class GenerationFlowsComponent implements OnInit {
   defaultColDef;
   getRowNodeId;
 
-  constructor(private generatonFlowsService: GeneratonFlowsService, private router: Router) {
+  displayModel: String = 'none';
+  createFlowForm: FormGroup;
+
+  constructor(private formBuilder: FormBuilder,
+    private generatonFlowsService: GeneratonFlowsService, private router: Router) {
     this.columnDefs = [
       {
-        headerName: 'Name', field: 'name', 
+        headerName: 'Name', field: 'name',
         // headerCheckboxSelection: true,
         // headerCheckboxSelectionFilteredOnly: true,
         checkboxSelection: true
@@ -42,7 +49,7 @@ export class GenerationFlowsComponent implements OnInit {
 
 
     ];
-    this.rowSelection = "single";
+    this.rowSelection = 'single';
     this.defaultColDef = {
       enableValue: true,
       // sortable: true,
@@ -53,6 +60,12 @@ export class GenerationFlowsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.createFlowForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      label: ['', Validators.required],
+      description: '',
+      action_on_data: ['', Validators.required],
+    });
     this.getFlow();
     this.getFlowComp();
     this.getAllGenFlow();
@@ -75,12 +88,37 @@ export class GenerationFlowsComponent implements OnInit {
   getFlow() {
     this.generatonFlowsService.getFlows().subscribe((flowData) => {
       this.dataFlow = flowData;
-      console.log("dataFlow", this.dataFlow)
+      console.log('dataFlow', this.dataFlow);
       this.rowData = flowData;
 
     });
   }
 
+  openModal() {
+    this.displayModel = 'block';
+  }
+  onCloseHandled() {
+    this.displayModel = 'none';
+    // this.submitted = false;
+    this.createFlowForm.clearValidators();
+    this.createFlowForm.reset();
+  }
+
+  createFlowModel() {
+    console.log('test values are ---------- ', this.createFlowForm.getRawValue());
+    // const createFlow = {
+      this.generatonFlowsService.addGenFlow(this.createFlowForm.getRawValue())
+      .subscribe(
+        (data) => {
+       console.log('successfully added gen flow -- ', data);
+        },
+        (error) => {
+          console.log('add gen flow error --- ', error);
+        }
+      )
+
+    // }
+  }
   // addFlow() {
   //   this.generatonFlowsService.addGenFlow(this.generation_flow).subscribe(data => {
   //     console.log("data", data);
@@ -118,9 +156,9 @@ export class GenerationFlowsComponent implements OnInit {
   }
 
   onSelectionChanged(show) {
-    var selectedRows = this.gridApi.getSelectedRows();
+    const selectedRows = this.gridApi.getSelectedRows();
     this.selectedFlow = selectedRows;
-    this.generatonFlowsService.changeMessage(this.selectedFlow[0].name)
+    this.generatonFlowsService.changeMessage(this.selectedFlow[0].name);
     // this.router.navigate(['flow-component'], { skipLocationChange: true });
   }
 
