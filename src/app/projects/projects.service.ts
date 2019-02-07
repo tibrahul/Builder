@@ -7,8 +7,9 @@ import { project } from '../projects/project.model'
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
-const apiUrl = "http://localhost:3000/add";
-const getMyAllProjUrl = "http://localhost:3000/getall";
+const apiUrl = "http://localhost:3003/add";
+const getMyAllProjUrl = "http://localhost:3003/getall";
+const delMyAllProjUrl = "http://localhost:3003/delete";
 
 @Injectable({
   providedIn: 'root'
@@ -57,12 +58,12 @@ export class ProjectsService {
   //   );
   // }
 
-  // deleteProject (id): Observable<project> {
-  //   const url = `${apiUrl}/${id}`;
+  deleteProject (id): Observable<project> {
+    const url = `${delMyAllProjUrl}/${id}`;
 
-  //   return this.http.delete<project>(url, httpOptions).pipe(
-  //     tap(_ => console.log(`deleted project id=${id}`)),
-  //     catchError(this.handleError<project>('deleteproject'))
-  //   );
-  // }
+    return this.http.delete<project>(url, httpOptions).pipe(
+      tap(_ => console.log(`deleted project id=${id}`)),
+      catchError(this.handleError<project>('deleteproject'))
+    );
+  }
 }

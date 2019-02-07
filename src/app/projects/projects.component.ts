@@ -13,6 +13,8 @@ import { project } from '../projects/project.model';
 export class ProjectsComponent implements OnInit {
 
   displayModel: String = 'none';
+  delmodal: String = 'none';
+  idToDelete: String = null;
   createProject: FormGroup;
   languages: string[] = ['English', 'Tamil', 'Spanish'];
   submitted = false;
@@ -42,6 +44,28 @@ export class ProjectsComponent implements OnInit {
   }
 
   get form_control() { return this.createProject.controls; }
+
+  getAllMyProjects() {
+    this.projectsService.getMyAllProjects().subscribe(data => {
+      this.myAllProjects = data;
+      console.log('data', this.myAllProjects);
+    }, error => {
+      console.log('Check the browser console to see more info.', 'Error!');
+    });
+  }
+  openDeleteModel(proj) {
+    this.idToDelete = proj._id;
+    this.delmodal = 'block'
+  }
+
+  deleteMyProjects() {
+    this.projectsService.deleteProject(this.idToDelete).subscribe(data => {
+      console.log("data", data);
+      this.delmodal = 'none'
+    }, error => {
+      console.log('Check the browser console to see more info.', 'Error!');
+    });
+  }
 
   projectCreate() {
     this.submitted = true;
@@ -105,12 +129,5 @@ export class ProjectsComponent implements OnInit {
     this.onCloseHandled();
     this.getAllMyProjects();
   }
-  getAllMyProjects() {
-    this.projectsService.getMyAllProjects().subscribe(data => {
-      this.myAllProjects = data;
-      console.log('data', this.myAllProjects);
-    }, error => {
-      console.log('Check the browser console to see more info.', 'Error!');
-    });
-  }
+
 }
