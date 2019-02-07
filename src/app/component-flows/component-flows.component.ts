@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FlowManagerService } from '../flow-manager/flow-manager.service';
 import { ComponentFlowsService } from './component-flows.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-component-flows',
@@ -13,16 +14,22 @@ export class ComponentFlowsComponent implements OnInit {
   rowData;
   rowSelection;
   defaultColDef;
-  gridApi;
+  flowCompGrid;
+  microFlowGrid;
   data: any = [];
   microFlow: any = [];
   gridColumnApi;
-  showMicroFlow = false;
+  showMicroFlow: Boolean = false;
   microColDef;
   flow_component_sequence: any = [];
   selectedFlow: any = [];
   message: string;
-  constructor(private flowManagerService: FlowManagerService, private componentFlowsService: ComponentFlowsService) {
+  addModel: String = 'none';
+  addMFModel: String = 'none';
+  createFlowForm: FormGroup;
+  createMFlowForm: FormGroup;
+
+  constructor(private formBuilder: FormBuilder, private flowManagerService: FlowManagerService, private componentFlowsService: ComponentFlowsService) {
     this.columnDefs = [
       { headerName: 'Component Name', field: 'component_name' },
       { headerName: 'FrameWork', field: 'dev_framework' },
@@ -31,28 +38,67 @@ export class ComponentFlowsComponent implements OnInit {
       { headerName: 'Language', field: 'dev_language' },
       { headerName: 'Label', field: 'label' },
       { headerName: 'Description', field: 'description' },
-
-
     ];
     this.microColDef = [
-      { headerName: 'sequence_id', field: 'sequence_id' },
+      { headerName: 'sequence_id', field: 'sequence_id', sort: 'asc' },
       { headerName: 'component_name', field: 'component_name' },
       { headerName: 'micro_flow_step_name', field: 'micro_flow_step_name' }
     ];
     this.rowSelection = 'single';
     this.defaultColDef = {
       enableValue: true,
-      // sortable: true,
-      filter: true,
       resizable: true
     };
   }
 
   ngOnInit() {
-    this.getFlowName();
+    this.getDataFromFlowService();
     this.getFlowComponentByName();
+    this.createFlowForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      label: ['', Validators.required],
+      description: '',
+      action_on_data: ['', Validators.required],
+    });
+    this.createMFlowForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      label: ['', Validators.required],
+      description: '',
+      action_on_data: ['', Validators.required],
+    });
   }
+
+  getDataFromFlowService() {
+    this.flowManagerService.currentMessage.subscribe((message) => {
+      this.message = message;
+    }, (error) => {
+      console.log("------------>err--------->>", error)
+    });
+  }
+
+  openAddModal() {
+    this.addModel = 'block'
+  }
+
+  openAddMFModal() {
+    this.addMFModel = 'block'
+  }
+
+  onCloseHandled() {
+    this.createFlowForm.clearValidators();
+    this.createFlowForm.reset();
+    this.addModel = 'none';
+  }
+
+  onCloseMFHandled() {
+    this.createMFlowForm.clearValidators();
+    this.createMFlowForm.reset();
+    this.addMFModel = 'none';
+  }
+
   getFlowComponentByName() {
+    console.log("-= = =  ==  >>> >  ", this.message)
+
     this.flowManagerService.getFlowComponentByName(this.message).subscribe((data) => {
       this.rowData = data;
       console.log(data);
@@ -61,36 +107,35 @@ export class ComponentFlowsComponent implements OnInit {
     });
   }
   onGridReady(params) {
-    this.gridApi = params.api;
+    this.flowCompGrid = params.api;
     this.gridColumnApi = params.columnApi;
-    // this.gridApi.sizeColumnsToFit();
+    this.flowCompGrid.sizeColumnsToFit();
   }
   onGridMicroFlowReady(params) {
-    this.gridApi = params.api;
+    this.microFlowGrid = params.api;
     this.gridColumnApi = params.columnApi;
-    this.gridApi.sizeColumnsToFit();
-  }
-  getFlowName() {
-    this.flowManagerService.currentMessage.subscribe((message) => {
-      this.message = message;
-    });
-  }
+    this.microFlowGrid.sizeColumnsToFit();
+    console.log("----------v-v->", this.microColDef)
+    console.log("----------v-v->", this.microFlowGrid)
+    // this.microFlowGrid.enableSorting = true
+      // this.microFlowGrid.getColumn('sequence_id').setSort("asc")
+    }
+
   getMicroFlowName(component) {
-    this.componentFlowsService.getMicroFlowByName(component).subscribe((data) => {
+    this.componentFlowsService.getMicroFlowByName(component).subscribe(data => {
+      console.log("selected data____+++++++++ ", data)
       if (data) {
         this.showMicroFlow = true;
       }
       this.microFlow = data;
-    });
+    }, error => {
+      console.log("==== ==  ? ? ", error)
+    })
   }
-  onSelectionChanged(show) {
-    const selectedRows = this.gridApi.getSelectedRows();
+  onSelectionChange() {
+    let selectedRows = this.flowCompGrid.getSelectedRows();
     this.selectedFlow = selectedRows;
-    const dataComponent = this.selectedFlow[0].component_name;
-    console.log(this.selectedFlow);
-    console.log('hello+++>>>:::::::++++++', this.selectedFlow[0].component_name);
     this.getMicroFlowName(this.selectedFlow[0].component_name);
-    // this.router.navigate(['flow-component'],{ skipLocationChange: true });
   }
 
 }

@@ -3,29 +3,29 @@
     padding: 20px;
     width: 200px;
     background-color: lightblue;
-  }
-  
-  .cdk-drop-dragging .cdk-drag {
+}
+
+.cdk-drop-dragging .cdk-drag {
     transition: transform 500ms cubic-bezier(0, 0, 0.2, 1);
-  }
-  
-  .cdk-drag-animating {
+}
+
+.cdk-drag-animating {
     transition: transform 550ms cubic-bezier(0, 0, 0.2, 1);
-  }
-  
-  .cdk-drag-placeholder {
+}
+
+.cdk-drag-placeholder {
     background-color: Highlight;
-  }
-  
-  .row-button {
+}
+
+.row-button {
     float: right;
-  }
-  .row-button button,
-  .row-button a {
+}
+
+.row-button button,
+.row-button a {
     margin-right: 8px;
-  }
-  
-  .flowTable {
-    margin-top:5%
-  }
-  
+}
+
+.flowTable {
+    margin-top: 50px
+}

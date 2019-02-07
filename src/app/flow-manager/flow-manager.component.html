@@ -1,51 +1,17 @@
-<!-- <div *ngIf="checkSelectedFlow">
-  <h1 style="text-align: center;"> <u>Flow Components</u> </h1>
-</div> -->
-<div class="container">
-  <div>
-    <h1 style="text-align: center;"> <u>Flows</u> </h1>
-  </div>
-  <br>
-  <!-- <div *ngIf="checkSelectedMicroFlow">
-  <h1 style="text-align: center;"> <u>Micro Flows</u> </h1>
-</div> -->
+<div class="container-fluid">
+  <h1 style="text-align: center;"> <u>Flows</u> </h1>
   <div class="row row-button">
     <button mat-raised-button color="primary" (click)=openModal()>Create</button>
     <button mat-raised-button>Update</button>
     <button mat-raised-button color="warn" (click)="deleteRow()">Delete</button>
   </div>
-  <div class="flowTable container">
+  <div class="flowTable">
     <ag-grid-angular #agGrid style="width: 100%; height: 100%;" id="myGrid" class="ag-theme-balham" [columnDefs]="columnDefs"
       [rowSelection]="rowSelection" [rowData]="rowData" [animateRows]="true" [defaultColDef]="defaultColDef"
-      (cellDoubleClicked)="routeNextPage()"
-      (selectionChanged)="onSelectionChanged($event)" (gridReady)="onGridReady($event)"></ag-grid-angular>
-    <!-- <ng-multiselect-dropdown
-  [placeholder]="'custom placeholder'"
-  [data]="dataFlowComponent"
-  [(ngModel)]="selectedItems"
-  [settings]="dropdownSettings"
-  (onSelect)="onItemSelect($event)"
-  (onDeSelect)="onItemDeSelect($event)"
-  (onDeSelectAll)="onUnSelectAll($event)"
-  (onSelectAll)="onSelectAll($event)"
->
-</ng-multiselect-dropdown> -->
-    <!-- <button class="btn btn-primary" (click)="addFlowComponent">Add Flow Conponent</button> -->
-    <!-- <div *ngIf="checkSelectedFlow">
-        <div class="test-header">Selected Flow: <span>{{selectedFlow[0].name}}</span></div>
-        <ag-grid-angular #agGrid style="width: 73%; height: 100%;" id="myGrid" class="ag-theme-balham" [columnDefs]="columnDefs"
-          [rowSelection]="rowSelection" [rowData]="dataFlowComponent" (selectionChanged)="onSelectionFlowChanged($event)"
-          (gridReady)="onGridReady($event)"></ag-grid-angular>
-          </div> -->
-    <!-- <div *ngIf="checkSelectedMicroFlow">
-      <ag-grid-angular #agGrid style="width: 38%; height: 100%;" id="myGrid" class="ag-theme-balham" [columnDefs]="columnDefsMicroFlow"
-      [rowSelection]="rowSelection" [rowData]="rowDataMicroFlow" (selectionChanged)="onSelectionMicroFlowChanged($event)"       [rowMultiSelectWithClick]="true"
-      (gridReady)="onGridReady($event)"></ag-grid-angular>
-      </div> -->
+      (cellDoubleClicked)="routeNextPage()" (selectionChanged)="onSelectionChanged($event)" (gridReady)="onGridReady($event)">
+    </ag-grid-angular>
   </div>
 </div>
-
-
 
 <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayModel}">
   <div class="modal-dialog modal-lg" role="dialog">
@@ -63,7 +29,6 @@
                 </div>
               </div>
             </div>
-            <!--  col-md-6   -->
 
             <div class="col-md-6">
               <div class="form-group">
@@ -91,14 +56,8 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="action">Action</label>
-                <!-- <select class="form-control" id="action" formControlName="action" [ngClass]="{ 'is-invalid': submitted && form_control.action.errors }">
-                  <option value="" selected>{{'select_primary' | i18next}}</option>
-                  <option value="english">English</option>
-                  <option value="tamil">Tamil</option>
-                  <option value="spanish">Spanish</option>
-                </select> -->
-                <input type="text" class="form-control" placeholder="enter your action" id="action"
-                formControlName="action_on_data" [ngClass]="{ 'is-invalid': submitted && form_control.action_on_data.errors }">
+                <input type="text" class="form-control" placeholder="enter your action" id="action" formControlName="action_on_data"
+                  [ngClass]="{ 'is-invalid': submitted && form_control.action_on_data.errors }">
                 <div *ngIf="submitted && form_control.action_on_data.errors" class="invalid-feedback">
                   <div *ngIf="form_control.action_on_data.errors.required">should not be empty</div>
                 </div>
@@ -117,7 +76,7 @@
   </div>
 </div>
 
-<div class="row" style="margin: 0px;">
+<!-- <div class="row" style="margin: 0px;">
   <div class="col-md-12" style="display: contents;">
     <div class="col-md-3">
       <div class="card" *ngIf="checkSelectedMicroFlow && checkSelectedFlowComponent">
@@ -133,4 +92,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
