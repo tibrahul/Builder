@@ -1,8 +1,8 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, Injectable } from '@angular/core';
-import { AppComponentService } from '../app.component.service'
+import { AppComponentService } from '../app.component.service';
 import { ProjectsService } from '../projects/projects.service';
-import { project } from '../projects/project.model'
+import { project } from '../projects/project.model';
 
 @Component({
   selector: 'app-projects',
@@ -16,7 +16,7 @@ export class ProjectsComponent implements OnInit {
   createProject: FormGroup;
   languages: string[] = ['English', 'Tamil', 'Spanish'];
   submitted = false;
-  myAllProjects: Array<Object> = []
+  myAllProjects: Array<Object> = [];
 
   constructor(private formBuilder: FormBuilder, private data: AppComponentService, private projectsService: ProjectsService) { }
 
@@ -48,7 +48,7 @@ export class ProjectsComponent implements OnInit {
     if (this.createProject.invalid) {
       return;
     }
-    let dataToSave = {
+    const dataToSave = {
       name: this.createProject.value.name,
       label: this.createProject.value.label,
       description: this.createProject.value.description,
@@ -94,10 +94,10 @@ export class ProjectsComponent implements OnInit {
       lotus_notes_cred_enabled: null,
       user_deployment_target: null,
       server_deployment_target: null,
-    }
+    };
 
     this.projectsService.addProject(dataToSave).subscribe(data => {
-      console.log("data", data);
+      console.log('data', data);
       this.getAllMyProjects();
     }, error => {
       console.log('Check the browser console to see more info.', 'Error!');
@@ -107,8 +107,8 @@ export class ProjectsComponent implements OnInit {
   }
   getAllMyProjects() {
     this.projectsService.getMyAllProjects().subscribe(data => {
-      this.myAllProjects = data
-      console.log("data", this.myAllProjects);
+      this.myAllProjects = data;
+      console.log('data', this.myAllProjects);
     }, error => {
       console.log('Check the browser console to see more info.', 'Error!');
     });

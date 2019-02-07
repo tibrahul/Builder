@@ -1,20 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-// import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { GeneratonFlowsService } from './generaton-flows.service';
-import { generation_flow } from './generation-flows.model';
-import { Router } from '@angular/router';
+import { IGenerateFlow } from './interface/generationFlow';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-
-import { IFlow } from './interface/flow';
+import { FlowManagerService } from './flow-manager.service';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-generation-flows',
-  templateUrl: './generation-flows.component.html',
-  styleUrls: ['./generation-flows.component.scss']
+  selector: 'app-flow-manager',
+  templateUrl: './flow-manager.component.html',
+  styleUrls: ['./flow-manager.component.scss']
 })
-export class GenerationFlowsComponent implements OnInit {
+export class FlowManagerComponent implements OnInit {
 
-  private generation_flow: generation_flow = {
+  private generateFlow: IGenerateFlow = {
     flow_name: '',
     flow_sequence: [],
   };
@@ -35,7 +32,7 @@ export class GenerationFlowsComponent implements OnInit {
   createFlowForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
-    private generatonFlowsService: GeneratonFlowsService, private router: Router) {
+    private flowManagerService: FlowManagerService, private router: Router) {
     this.columnDefs = [
       {
         headerName: 'Name', field: 'name',
@@ -69,7 +66,7 @@ export class GenerationFlowsComponent implements OnInit {
     this.getFlow();
     this.getFlowComp();
     this.getAllGenFlow();
-    // this.generatonFlowsService.currentMessage.subscribe(message => this.message = message)
+    // this.flowManagerService.currentMessage.subscribe(message => this.message = message)
     // this.dropdownSettings = {
     //   singleSelection: false,
     //   idField: '_id',
@@ -80,13 +77,13 @@ export class GenerationFlowsComponent implements OnInit {
   }
 
   getFlowComp() {
-    this.generatonFlowsService.getFlowComponents().subscribe((flowComponentData) => {
+    this.flowManagerService.getFlowComponents().subscribe((flowComponentData) => {
       this.dataFlowComponent = flowComponentData;
     });
   }
 
   getFlow() {
-    this.generatonFlowsService.getFlows().subscribe((flowData) => {
+    this.flowManagerService.getFlows().subscribe((flowData) => {
       this.dataFlow = flowData;
       console.log('dataFlow', this.dataFlow);
       this.rowData = flowData;
@@ -107,7 +104,7 @@ export class GenerationFlowsComponent implements OnInit {
   createFlowModel() {
     console.log('test values are ---------- ', this.createFlowForm.getRawValue());
     // const createFlow = {
-      this.generatonFlowsService.addGenFlow(this.createFlowForm.getRawValue())
+      this.flowManagerService.saveFlow(this.createFlowForm.getRawValue())
       .subscribe(
         (data) => {
        console.log('successfully added gen flow -- ', data);
@@ -115,12 +112,12 @@ export class GenerationFlowsComponent implements OnInit {
         (error) => {
           console.log('add gen flow error --- ', error);
         }
-      )
+      );
 
     // }
   }
   // addFlow() {
-  //   this.generatonFlowsService.addGenFlow(this.generation_flow).subscribe(data => {
+  //   this.flowManagerService.addGenFlow(this.generation_flow).subscribe(data => {
   //     console.log("data", data);
   //     this.getAllGenFlow();
   //     this.showMainContent = false
@@ -131,7 +128,7 @@ export class GenerationFlowsComponent implements OnInit {
   // }
 
   getAllGenFlow() {
-    this.generatonFlowsService.getGenFlow().subscribe((getGenFlow) => {
+    this.flowManagerService.getGenFlow().subscribe((getGenFlow) => {
       this.getGenFlow = getGenFlow;
     });
   }
@@ -158,8 +155,8 @@ export class GenerationFlowsComponent implements OnInit {
   onSelectionChanged(show) {
     const selectedRows = this.gridApi.getSelectedRows();
     this.selectedFlow = selectedRows;
-    this.generatonFlowsService.changeMessage(this.selectedFlow[0].name);
-    // this.router.navigate(['flow-component'], { skipLocationChange: true });
+    this.flowManagerService.changeMessage(this.selectedFlow[0].name);
+    this.router.navigate(['flow-component'], { skipLocationChange: true });
   }
 
   // onSelectionMicroFlowChanged(show) {
@@ -213,6 +210,4 @@ export class GenerationFlowsComponent implements OnInit {
   //   this.addFlow();
   //   this.empty();
   // }
-
 }
-
