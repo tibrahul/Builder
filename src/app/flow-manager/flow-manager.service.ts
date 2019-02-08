@@ -53,7 +53,9 @@ export class FlowManagerService {
   }
 
 
-
+  updateFlow(flowObject: IFlow): Observable<any> {
+    return this.http.put(flowServiceURL + 'update', flowObject);
+  }
 
 
 
