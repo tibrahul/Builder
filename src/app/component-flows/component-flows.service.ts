@@ -56,7 +56,7 @@ export class ComponentFlowsService {
     return this.http.put(updateFlow + 'update', flowObject);
   }
   updateFlowComp(flowObject: IFlowComponent): Observable<any> {
-    return this.http.post(updateFlowComp + 'update', flowObject);
+    return this.http.put(updateFlowComp + 'update', flowObject);
   }
 
   addFlowComp(flowObject): Observable<IFlowComponent> {

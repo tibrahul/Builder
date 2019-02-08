@@ -33,6 +33,7 @@ export class ComponentFlowsComponent implements OnInit {
     description: '',
   }
   columnDefs;
+  getFlowCompName: string;
   icons;
   rowData;
   rowSelection;
@@ -149,12 +150,20 @@ export class ComponentFlowsComponent implements OnInit {
   }
   deleteRowComponent() {
 
+    this.rowData.flow_comp_seq.forEach((data,index)=>{
+      if(this.getFlowCompName === data.component_name){
+        this.rowData.flow_comp_seq.splice(this.rowData.flow_comp_seq[index]); 
+        this.updataFLowComp();
+        return
+      }
+    })
+
   }
 
   createFlowModel() {
     let dataToSave = this.createMFlowForm.getRawValue()
     dataToSave.component_name = this.selectedFlow[0].component_name
-    this.componentFlowsService.addMicroFlow(dataToSave).subscribe((data) => {
+    this.componentFlowsService.updateFlowComp(dataToSave).subscribe((data) => {
       
     },
       (error) => {
@@ -175,19 +184,38 @@ export class ComponentFlowsComponent implements OnInit {
   }
 
   updateFlowCompModel() {
-    console.log("======> > >  > >  ")
-    this.componentFlowsService.updateFlowComp(this.createFlowComponentModel.getRawValue()).subscribe(data => {
-      console.log("hello", data)
-      this.onCloseHandled();
-      this.getFlowComponentByName();
-    },
-      (error) => {
-        console.log('error delete flow manager --- ', error);
+    this.getFlowCompName = this.createFlowComponentModel.getRawValue().component_name;
+    this.rowData.flow_comp_seq.forEach((data,index)=>{
+      if(this.getFlowCompName === data.component_name){
+        this.rowData.flow_comp_seq[index] = this.createFlowComponentModel.getRawValue()
+        this.updataFLowComp();
+        return
       }
-    );
+    })
+    console.log("in update flow",)
+    // this.rowData.flow_comp_seq.push(this.createFlowComponentModel.getRawValue())
+    // this.addGenFlow();
+    // console.log("======> > >  > >  ")
+    // this.componentFlowsService.updateFlowComp(this.createFlowComponentModel.getRawValue()).subscribe(data => {
+    //   console.log("hello", data)
+    //   this.onCloseHandled();
+    //   this.getFlowComponentByName();
+    // },
+    //   (error) => {
+    //     console.log('error delete flow manager --- ', error);
+    //   }
+    // );
   }
 
   addGenFlow() {
+    this.componentFlowsService.addGenFlow(this.rowData).subscribe(data => {
+      console.log("i am in generation", data)
+      this.getFlowComponentByName();
+    }, error => {
+      console.log("===got an error r===")
+    })
+  }
+  updataFLowComp(){
     this.componentFlowsService.addGenFlow(this.rowData).subscribe(data => {
       console.log("i am in generation", data)
       this.getFlowComponentByName();
