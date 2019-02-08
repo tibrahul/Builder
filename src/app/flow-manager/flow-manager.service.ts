@@ -57,13 +57,6 @@ export class FlowManagerService {
     return this.http.put(flowServiceURL + 'update', flowObject);
   }
 
-
-
-
-
-
-
-
   changeMessage(message: string) {
     this.messageSource.next(message);
   }
