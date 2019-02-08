@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GenerationFlowsComponent } from './generation-flows.component';
+import { ComponentFlowsComponent } from './component-flows.component';
 
-describe('GenerationFlowsComponent', () => {
-  let component: GenerationFlowsComponent;
-  let fixture: ComponentFixture<GenerationFlowsComponent>;
+describe('ComponentFlowsComponent', () => {
+  let component: ComponentFlowsComponent;
+  let fixture: ComponentFixture<ComponentFlowsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GenerationFlowsComponent ]
+      declarations: [ ComponentFlowsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GenerationFlowsComponent);
+    fixture = TestBed.createComponent(ComponentFlowsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

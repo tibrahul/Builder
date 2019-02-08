@@ -21,7 +21,6 @@
     "require_appContext":"App Context is required",
     "require_description":"விளக்கம் தேவைப்படுகிறது",
     "placeholder_label":"விவரத்துணுக்கை உள்ளிடவும்",
-    "browser_alert":"hello tamil",
     "_languages": {
         "en": "English",
         "ta": "தமிழ்",

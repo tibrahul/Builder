@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ProjectsComponent } from './projects/projects.component';
-import { I18NEXT_SERVICE, ITranslationService, I18NextModule, I18NEXT_NAMESPACE_RESOLVER } from 'angular-i18next';
+import { FlowManagerComponent } from './flow-manager/flow-manager.component';
+import { ComponentFlowsComponent } from './component-flows/component-flows.component';
 
 const routes: Routes = [
   { path: 'project', component: ProjectsComponent },
+  { path: 'flow-component', component: ComponentFlowsComponent },
+  { path: 'flow-manager', component: FlowManagerComponent },
   { path: '', redirectTo: 'project', pathMatch: 'full' },
   { path: '**', redirectTo: 'project', pathMatch: 'full' },
 ];

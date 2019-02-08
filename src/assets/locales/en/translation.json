@@ -21,7 +21,6 @@
     "require_appContext":"App Context is required",
     "require_description":"description is required",
     "placeholder_label":"Enter Label",
-    "browser_alert":"hello english",
     "_languages": {
         "en": "English",
         "ta": "தமிழ்",

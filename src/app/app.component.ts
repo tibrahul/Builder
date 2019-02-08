@@ -13,11 +13,8 @@ export class AppComponent implements OnInit {
   loading = true;
   start = 0;
   constructor(
-    @Inject(I18NEXT_SERVICE) private i18NextService: ITranslationService,
-    private data:AppComponentService,
-  ) { }
+    @Inject(I18NEXT_SERVICE) private i18NextService: ITranslationService) { }
   ngOnInit() {
-    this.data.currentMessage.subscribe(message => this.message = message)
     const browser = detect();
     if (browser.name !== 'chrome') {
       if (this.i18NextService.language === 'en') {

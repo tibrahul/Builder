@@ -5,8 +5,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { I18NEXT_SERVICE, I18NextLoadResult, I18NextModule, ITranslationService, defaultInterpolationFormat,
-I18NEXT_NAMESPACE } from 'angular-i18next';
-import { HttpClientModule } from  '@angular/common/http';
+I18NEXT_NAMESPACE } from 'angular-i18next'
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, ApplicationRef, LOCALE_ID } from '@angular/core';
 import * as i18nextXHRBackend from 'i18next-xhr-backend';
 import * as i18nextLanguageDetector from 'i18next-browser-languagedetector';
@@ -16,7 +18,15 @@ import { HeaderLanguageComponent } from './header-controls/header.language.compo
 import sprintf from 'i18next-sprintf-postprocessor';
 import { ProjectsService } from './projects/projects.service';
 import { AppComponentService } from './app.component.service';
-import { GenerationFlowsComponent } from './generation-flows/generation-flows.component';
+// import { FlowManagerComponent } from './flow-manager/flow-manager.component';
+import {AgGridModule} from "ag-grid-angular";
+// import { GeneratonFlowsService } from './generation-flows/generaton-flows.service';
+import { ComponentFlowsComponent } from './component-flows/component-flows.component';
+import { ComponentFlowsService } from './component-flows/component-flows.service';
+
+import {MatButtonModule} from '@angular/material/button';
+import { FlowManagerComponent } from './flow-manager/flow-manager.component';
+
 
 const i18nextOptions = {
   whitelist: ['en', 'ta', 'es'],
@@ -75,22 +85,27 @@ export const I18N_PROVIDERS = [
     AppComponent,
     ProjectsComponent,
     HeaderLanguageComponent,
-    GenerationFlowsComponent
+    ComponentFlowsComponent,
+    FlowManagerComponent,
   ],
   imports: [
     BrowserModule,
+    AgGridModule.withComponents([]),
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     I18NextModule.forRoot(),
     ValidationMessageModule,
+    DragDropModule,
+    NgMultiSelectDropDownModule.forRoot(),
     HttpClientModule,
-
+    MatButtonModule,
     I18NextValidationMessageModule,
   ],
   providers: [
     AppComponentService,
     ProjectsService,
+    ComponentFlowsService,
     I18N_PROVIDERS,
   ],
   bootstrap: [AppComponent]
