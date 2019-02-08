@@ -8,17 +8,12 @@ import { IFlowComponent } from './interface/flowComponents';
 // import { IGenerateFlow } from '../flow-manager/interface/generationFlow';
 import { IMicroFlow } from './interface/microFlow';
 import { IGenerateFlow } from '../flow-manager/interface/generationFlow';
+import { SharedService } from 'src/shared/shared.service';
 
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
-const getMFByName = 'http://localhost:3002/microflow/getbycomp';
-const addFlowComp = 'http://localhost:3001/flow_component/save';
-const updateFlow = "http://localhost:3001/flow/update";
-const updateFlowComp = "http://localhost:3001/flow_component/";
-const addGenFlow = "http://localhost:3001/generation_flow/update";
-const addMFlow = "http://localhost:3002/microflow/save";
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +22,7 @@ const addMFlow = "http://localhost:3002/microflow/save";
 export class ComponentFlowsService {
   private messageSource = new BehaviorSubject('');
   currentMessage = this.messageSource.asObservable();
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private restapi:SharedService) {
 
   }
   private handleError<T>(operation = 'operation', result?: T) {
@@ -45,7 +40,7 @@ export class ComponentFlowsService {
   }
 
   getMicroFlowByName(name: string): Observable<IMicroFlow> {
-    const url = `${getMFByName}/${name}`;
+    const url = `${this.restapi.mflowbaseUrl}/microflow/getbycomp/${name}`;
     return this.http.get<IMicroFlow>(url).pipe(
       tap(_ => console.log(`fetched project flow component=${name}`)),
       catchError(this.handleError<IMicroFlow>(`getFlowComp name=${name}`))
@@ -53,29 +48,29 @@ export class ComponentFlowsService {
   }
 
   updateFlow(flowObject: IFlow): Observable<any> {
-    return this.http.put(updateFlow + 'update', flowObject);
+    return this.http.put(this.restapi.flowbaseUrl + '/flow/update', flowObject);
   }
   updateFlowComp(flowObject: IFlowComponent): Observable<any> {
-    return this.http.put(updateFlowComp + 'update', flowObject);
+    return this.http.put(this.restapi.flowbaseUrl + '/flow_component/update', flowObject);
   }
 
   addFlowComp(flowObject): Observable<IFlowComponent> {
     console.log('i am in service');
-    return this.http.post<IFlowComponent>(addFlowComp, flowObject, httpOptions).pipe(
+    return this.http.post<IFlowComponent>(this.restapi.flowbaseUrl + '/flow_component/save', flowObject, httpOptions).pipe(
       tap((tapFlowObject: IFlowComponent) => console.log(`added project w/ id=${tapFlowObject}`)),
       catchError(this.handleError<IFlowComponent>('addGenFlow'))
     );
   }
   addGenFlow(flowObject): Observable<IGenerateFlow> {
     console.log('i am in service');
-    return this.http.put<IGenerateFlow>(addGenFlow, flowObject, httpOptions).pipe(
+    return this.http.put<IGenerateFlow>(this.restapi.flowbaseUrl+ '/generation_flow/update', flowObject, httpOptions).pipe(
       tap((tapFlowObject: IGenerateFlow) => console.log(`added project w/ id=${tapFlowObject}`)),
       catchError(this.handleError<IGenerateFlow>('addGenFlow'))
     );
   }
 
   addMicroFlow(flowObject): Observable<IFlowComponent> {
-    return this.http.post<IFlowComponent>(addMFlow, flowObject, httpOptions).pipe(
+    return this.http.post<IFlowComponent>(this.restapi.mflowbaseUrl + '/microflow/save', flowObject, httpOptions).pipe(
       tap((tapFlowObject: IFlowComponent) => console.log(`added project w/ id=${tapFlowObject}`)),
       catchError(this.handleError<IFlowComponent>('addGenFlow'))
     );
