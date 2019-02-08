@@ -17,7 +17,8 @@ const getMFByName = 'http://localhost:3002/microflow/getbycomp';
 const addFlowComp = 'http://localhost:3001/flow_component/save';
 const updateFlow = "http://localhost:3001/flow/update";
 const updateFlowComp = "http://localhost:3001/flow_component/";
-const addGenFlow = "http://localhost:3001/generation_flow/update"
+const addGenFlow = "http://localhost:3001/generation_flow/update";
+const addMFlow = "http://localhost:3002/microflow/save";
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +45,6 @@ export class ComponentFlowsService {
   }
 
   getMicroFlowByName(name: string): Observable<IMicroFlow> {
-
     const url = `${getMFByName}/${name}`;
     return this.http.get<IMicroFlow>(url).pipe(
       tap(_ => console.log(`fetched project flow component=${name}`)),
@@ -59,7 +59,7 @@ export class ComponentFlowsService {
     return this.http.post(updateFlowComp + 'update', flowObject);
   }
 
-   addFlowComp(flowObject): Observable<IFlowComponent> {
+  addFlowComp(flowObject): Observable<IFlowComponent> {
     console.log('i am in service');
     return this.http.post<IFlowComponent>(addFlowComp, flowObject, httpOptions).pipe(
       tap((tapFlowObject: IFlowComponent) => console.log(`added project w/ id=${tapFlowObject}`)),
@@ -71,6 +71,13 @@ export class ComponentFlowsService {
     return this.http.put<IGenerateFlow>(addGenFlow, flowObject, httpOptions).pipe(
       tap((tapFlowObject: IGenerateFlow) => console.log(`added project w/ id=${tapFlowObject}`)),
       catchError(this.handleError<IGenerateFlow>('addGenFlow'))
+    );
+  }
+
+  addMicroFlow(flowObject): Observable<IFlowComponent> {
+    return this.http.post<IFlowComponent>(addMFlow, flowObject, httpOptions).pipe(
+      tap((tapFlowObject: IFlowComponent) => console.log(`added project w/ id=${tapFlowObject}`)),
+      catchError(this.handleError<IFlowComponent>('addGenFlow'))
     );
   }
 }

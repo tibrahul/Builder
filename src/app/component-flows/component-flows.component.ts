@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵConsole } from '@angular/core';
 import { FlowManagerService } from '../flow-manager/flow-manager.service';
 import { ComponentFlowsService } from './component-flows.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import {IMicroFlow} from './interface/microFlow';
-import {IFlowComponent} from './interface/flowComponents';
+import { IMicroFlow } from './interface/microFlow';
+import { IFlowComponent } from './interface/flowComponents';
 import { IGenerateFlow } from '../flow-manager/interface/generationFlow';
 
 
@@ -23,7 +23,7 @@ export class ComponentFlowsComponent implements OnInit {
     flow_name: '',
     flow_sequence: [],
   };
-  iFlowComponent: IFlowComponent =  {
+  iFlowComponent: IFlowComponent = {
     component_name: '',
     label: '',
     type: '',
@@ -55,10 +55,11 @@ export class ComponentFlowsComponent implements OnInit {
   createMFlowForm: FormGroup;
   isCreateModel: Boolean = true;
   gridOptions;
+  addToMicroFlow: Boolean = null;
 
   constructor(private formBuilder: FormBuilder, private flowManagerService: FlowManagerService, private componentFlowsService: ComponentFlowsService) {
     this.columnDefs = [
-      { headerName: 'Component Name', field: 'component_name', checkboxSelection: true},
+      { headerName: 'Component Name', field: 'component_name', checkboxSelection: true },
       { headerName: 'FrameWork', field: 'dev_framework' },
       { headerName: 'Type', field: 'type' },
       { headerName: 'Sequence', field: 'sequence_id' },
@@ -110,6 +111,7 @@ export class ComponentFlowsComponent implements OnInit {
   }
 
   openAddMFModal() {
+    this.addToMicroFlow = true
     this.addMFModel = 'block'
   }
 
@@ -120,69 +122,77 @@ export class ComponentFlowsComponent implements OnInit {
   }
 
   onCloseMFHandled() {
+    this.addToMicroFlow = null
     this.createMFlowForm.clearValidators();
     this.createMFlowForm.reset();
     this.addMFModel = 'none';
   }
 
-  
-
   getFlowComponentByName() {
-    console.log("-= = =  ==  >>> >  ", this.message)
-
     this.flowManagerService.getFlowComponentByName(this.message).subscribe((data) => {
       this.rowData = data;
-      console.log(data);
       this.data = this.rowData.flow_comp_seq;
       console.log(this.rowData.flow_comp_seq);
     });
   }
-  createFlowComponent(){
-    this.rowData.flow_comp_seq.push(this.createFlowComponentModel.getRawValue())
-    this.componentFlowsService.addFlowComp(this.createFlowComponentModel.getRawValue()).subscribe((data)=>{
-          this.generateFlow.flow_sequence = this.rowData;
-          this.generateFlow.flow_name = this.message
-          console.log("i am in addGen flow",this.generateFlow)
-          this.addGenFlow();
-          this.onCloseHandled();
-          this.getFlowComponentByName();
-        },
-        (error) => {
-          console.log('add gen flow error --- ', error);
-        }
-      );
-      }
-  deleteRowComponent(){
+
+  createFlowComponent() {
+    this.componentFlowsService.addFlowComp(this.createFlowComponentModel.getRawValue()).subscribe((data) => {
+      this.rowData.flow_comp_seq.push(this.createFlowComponentModel.getRawValue())
+      this.addGenFlow();
+      this.onCloseHandled();
+    },
+      (error) => {
+        console.log('add gen flow error --- ', error);
+      } 
+    );
+  }
+  deleteRowComponent() {
 
   }
 
-  updateRowMicro(){
+  createFlowModel() {
+    let dataToSave = this.createMFlowForm.getRawValue()
+    dataToSave.component_name = this.selectedFlow[0].component_name
+    this.componentFlowsService.addMicroFlow(dataToSave).subscribe((data) => {
+      
+    },
+      (error) => {
+        console.log('add gen flow error --- ', error);
+      }
+    );
+  }
+
+  updateRowMicro() {
     this.isRemoveModel = false;
   }
 
-  updateRow(){
-      this.isCreateModel = false;
-      this.iFlowComponent = this.selectedFlow[0];
-      console.log(this.createFlowComponentModel)
-      this.openAddModal();
+  updateRow() {
+    this.isCreateModel = false;
+    this.iFlowComponent = this.selectedFlow[0];
+    console.log(this.createFlowComponentModel)
+    this.openAddModal();
   }
 
   updateFlowCompModel() {
-    this.componentFlowsService.updateFlowComp(this.createFlowComponentModel.getRawValue()).subscribe(
-      (data) => {
-        console.log("hello",data)
-        this.onCloseHandled();
-        this.getFlowComponentByName();
-      },
+    console.log("======> > >  > >  ")
+    this.componentFlowsService.updateFlowComp(this.createFlowComponentModel.getRawValue()).subscribe(data => {
+      console.log("hello", data)
+      this.onCloseHandled();
+      this.getFlowComponentByName();
+    },
       (error) => {
         console.log('error delete flow manager --- ', error);
       }
     );
   }
 
-  addGenFlow(){
-    this.componentFlowsService.addGenFlow(this.generateFlow).subscribe((data)=>{
-      console.log("i am in generation",this.data)
+  addGenFlow() {
+    this.componentFlowsService.addGenFlow(this.rowData).subscribe(data => {
+      console.log("i am in generation", data)
+      this.getFlowComponentByName();
+    }, error => {
+      console.log("===got an error r===")
     })
   }
 
@@ -198,8 +208,8 @@ export class ComponentFlowsComponent implements OnInit {
     console.log("----------v-v->", this.microColDef)
     console.log("----------v-v->", this.microFlowGrid)
     // this.microFlowGrid.enableSorting = true
-      // this.microFlowGrid.getColumn('sequence_id').setSort("asc")
-    }
+    // this.microFlowGrid.getColumn('sequence_id').setSort("asc")
+  }
 
   getMicroFlowName(component) {
     this.componentFlowsService.getMicroFlowByName(component).subscribe(data => {
@@ -212,13 +222,14 @@ export class ComponentFlowsComponent implements OnInit {
       console.log("==== ==  ? ? ", error)
     })
   }
-  microFlowView(){
+  microFlowView() {
     this.getMicroFlowName(this.selectedFlow[0].component_name);
   }
   onSelectionChange() {
     let selectedRows = this.flowCompGrid.getSelectedRows();
     this.selectedFlow = selectedRows;
-    // this.getMicroFlowName(this.selectedFlow[0].component_name);
+    console.log(" [   = =  =  > > >", this.selectedFlow)
+    this.microFlowView();
   }
 
 }
