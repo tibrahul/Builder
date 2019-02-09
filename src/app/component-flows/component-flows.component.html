@@ -22,14 +22,14 @@
     <div class="row row-button">
       <button mat-raised-button color="primary" (click)=openAddMFModal()>Create</button>
       <button mat-raised-button (click)=updateRowMicro()>Update</button>
-      <button mat-raised-button color="warn">Delete</button>
+      <button mat-raised-button color="warn" (click)="deleteMicroFlow()">Delete</button>
     </div>
     <div class="row">
 
       <div class="col-md-12">
         <div *ngIf="showMicroFlow">
-          <ag-grid-angular #agGrid style="width: 100%; height: 100%;" id="myGrid" [defaultColDef]="defaultColDef"
-            [animateRows]="true" class="ag-theme-balham" [columnDefs]="microColDef" [rowData]="microFlow" (gridReady)="onGridMicroFlowReady($event)"></ag-grid-angular>
+          <ag-grid-angular #agGrid style="width: 100%; height: 100%;" id="myGrid" [defaultColDef]="defaultColDef" (selectionChanged)="onSelectionMFChange()"
+          [rowSelection]="rowSelection" [animateRows]="true" class="ag-theme-balham" [columnDefs]="microColDef" [rowData]="microFlow" (gridReady)="onGridMicroFlowReady($event)"></ag-grid-angular>
         </div>
       </div>
     </div>
@@ -135,6 +135,7 @@
     </div>
   </div>
 </div>
+
 <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':addMFModel}">
   <div class="modal-dialog modal-md" role="dialog">
     <div class="modal-content">
@@ -145,8 +146,8 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="sequence_id">Sequence Id</label>
-                <input type="text" class="form-control" placeholder="Enter Sequence Id" id="sequence_id"
-                  formControlName="sequence_id" [ngClass]="{ 'is-invalid': submitted && form_control.sequence_id.errors }">
+                <input type="text" class="form-control" placeholder="Enter Sequence Id" id="sequence_id" 
+                  formControlName="sequence_id" [(ngModel)]="iMicroFlow.sequence_id" [ngClass]="{ 'is-invalid': submitted && form_control.sequence_id.errors }">
                 <div *ngIf="submitted && form_control.sequence_id.errors" class="invalid-feedback">
                   <div *ngIf="form_control.sequence_id.errors.required">{{'require_name' | i18next}}</div>
                 </div>
@@ -158,7 +159,7 @@
                 <label for="component_name">Component Name</label>
                 <input type="text" class="form-control" placeholder="Enter Component Name" id="component_name"
                   [value]="selectedFlow[0]?.component_name" disabled
-                  formControlName="component_name" [ngClass]="{ 'is-invalid': submitted && form_control.component_name.errors }">
+                  formControlName="component_name"  [(ngModel)]="iMicroFlow.component_name" [ngClass]="{ 'is-invalid': submitted && form_control.component_name.errors }">
                 <div *ngIf="submitted && form_control.component_name.errors" class="invalid-feedback">
                   <div *ngIf="form_control.component_name.errors.required">{{'require_label' | i18next}}</div>
                 </div>
@@ -170,8 +171,8 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="micro_flow_step_name">Micro Flow name</label>
-                <textarea class="form-control" rows="1" id="micro_flow_step_name" placeholder="Enter Micro Flow Name"
-                  formControlName="micro_flow_step_name" [ngClass]="{ 'is-invalid': submitted && form_control.micro_flow_step_name.errors }"></textarea>
+                <textarea class="form-control" rows="1" id="micro_flow_step_name" placeholder="Enter Micro Flow Name" 
+                  formControlName="micro_flow_step_name" [(ngModel)]="iMicroFlow.micro_flow_step_name" [ngClass]="{ 'is-invalid': submitted && form_control.micro_flow_step_name.errors }"></textarea>
                 <div *ngIf="submitted && form_control.micro_flow_step_name.errors" class="invalid-feedback">
                   <div *ngIf="form_control.micro_flow_step_name.errors.required">{{'require_description' | i18next}}</div>
                 </div>
@@ -181,12 +182,12 @@
         </form>
       </div>
       <div class="modal-footer">
-          <div class="form-group" *ngIf="addToMicroFlow">
+          <div class="form-group" *ngIf="!isRemoveModel">
             <button type="button" class="btn button-create" (click)="createFlowModel()">{{ 'create' | i18next }}</button>
             <button type="button" class="btn button-close" (click)="onCloseMFHandled()">{{ 'cancel' | i18next }}</button>
           </div>
-          <div class="form-group" *ngIf="!addToMicroFlow">
-            <button type="button" class="btn button-create" (click)="updateFlowModel()">update</button>
+          <div class="form-group" *ngIf="isRemoveModel">
+            <button type="button" class="btn button-create" (click)="updateMicroFlow()">update</button>
             <button type="button" class="btn button-close" (click)="onCloseMFHandled()">{{ 'cancel' | i18next }}</button>
           </div>
         </div>

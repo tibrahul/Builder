@@ -115,8 +115,10 @@ export class FlowManagerComponent implements OnInit {
   onSelectionChanged(show) {
     // const selectedRows = this.gridApi.getSelectedRows();
     this.selectedFlow = this.gridApi.getSelectedRows();
-    console.log('selected flow values are ------ ', this.selectedFlow);
+    console.log('selected flow values are ------ ', this.selectedFlow.length);
+    if(this.selectedFlow.length != 0){
     this.flowManagerService.changeMessage(this.selectedFlow[0].name);
+    }
     // this.router.navigate(['flow-component'], { skipLocationChange: true });
   }
 

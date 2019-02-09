@@ -69,6 +69,20 @@ export class ComponentFlowsService {
     );
   }
 
+  updateMicroFlow(flowObject: IMicroFlow): Observable<any> {
+    return this.http.put(this.restapi.mflowbaseUrl + '/microflow/update', flowObject);
+  }
+
+
+  deleteMicroFlow (id): Observable<IMicroFlow> {
+    const url = `${this.restapi.mflowbaseUrl}/microflow/delete/${id}`;
+
+    return this.http.delete<IMicroFlow>(url, httpOptions).pipe(
+      tap(_ => console.log(`deleted project id=${id}`)),
+      catchError(this.handleError<IMicroFlow>('deleteproject'))
+    );
+  }
+
   addMicroFlow(flowObject): Observable<IFlowComponent> {
     return this.http.post<IFlowComponent>(this.restapi.mflowbaseUrl + '/microflow/save', flowObject, httpOptions).pipe(
       tap((tapFlowObject: IFlowComponent) => console.log(`added project w/ id=${tapFlowObject}`)),
