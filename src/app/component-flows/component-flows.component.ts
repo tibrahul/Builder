@@ -133,17 +133,19 @@ export class ComponentFlowsComponent implements OnInit {
   }
 
   getFlowComponentByName() {
-    this.flowManagerService.getFlowComponentByName(this.message).subscribe((data) => {
+    console.log("asodhofhso",this.message)
+    this.componentFlowsService.getFlowGenComponentByName(this.message).subscribe((data) => {
+      console.log("adshffdf",data)
       this.rowData = data;
+      console.log(this.rowData);
       this.data = this.rowData.flow_comp_seq;
-      console.log(this.rowData.flow_comp_seq);
     });
   }
 
   createFlowComponent() {
-    this.componentFlowsService.addFlowComp(this.createFlowComponentModel.getRawValue()).subscribe((data) => {
+    this.componentFlowsService.saveFlowComponent(this.createFlowComponentModel.getRawValue()).subscribe((data) => {
       this.rowData.flow_comp_seq.push(this.createFlowComponentModel.getRawValue())
-      this.addGenFlow();
+      this.updateGenFlow();
       this.onCloseHandled();
     },
       (error) => {
@@ -157,7 +159,7 @@ export class ComponentFlowsComponent implements OnInit {
     this.rowData.flow_comp_seq.forEach((data,index)=>{
       if(this.getFlowCompName === data.component_name){
         this.rowData.flow_comp_seq.splice(index,1)
-        this.updataFLowComp();
+        this.updateGenFlow();
         return
       }
     })
@@ -176,15 +178,16 @@ export class ComponentFlowsComponent implements OnInit {
     this.rowData.flow_comp_seq.forEach((data,index)=>{
       if(this.getFlowCompName === data.component_name){
         this.rowData.flow_comp_seq[index] = this.createFlowComponentModel.getRawValue()
-        this.updataFLowComp();
+        this.updateGenFlow();
+        this.onCloseHandled();
         return
       }
     })
     console.log("in update flow",)
   }
 
-  addGenFlow() {
-    this.componentFlowsService.addGenFlow(this.rowData).subscribe(data => {
+  updateGenFlow() {
+    this.componentFlowsService.updateGenFlow(this.rowData).subscribe(data => {
       console.log("i am in generation", data)
       this.getFlowComponentByName();
     }, error => {
@@ -193,7 +196,7 @@ export class ComponentFlowsComponent implements OnInit {
   }
   updataFLowComp(){
     console.log("i am in updateflow comp",this.rowData)
-    this.componentFlowsService.addGenFlow(this.rowData).subscribe(data => {
+    this.componentFlowsService.updateFlowComponent(this.rowData).subscribe(data => {
       console.log("i am in generation", data)
       this.getFlowComponentByName();
     }, error => {
@@ -218,7 +221,7 @@ export class ComponentFlowsComponent implements OnInit {
   }
 
   getMicroFlowName(component) {
-    this.componentFlowsService.getMicroFlowByName(component).subscribe(data => {
+    this.componentFlowsService.getMicroFlowByCompName(component).subscribe(data => {
       console.log("selected data____+++++++++ ", data)
       if (data) {
         this.showMicroFlow = true;
@@ -234,10 +237,10 @@ export class ComponentFlowsComponent implements OnInit {
     }
   }
 
-  createFlowModel() {
+  createMicroFLow() {
     let dataToSave = this.createMFlowForm.getRawValue()
     dataToSave.component_name = this.selectedFlow[0].component_name
-    this.componentFlowsService.addMicroFlow(dataToSave).subscribe((data) => {
+    this.componentFlowsService.saveMicroFlow(dataToSave).subscribe((data) => {
       console.log("i am in add micro flow",data)
       this.onCloseHandled();
 

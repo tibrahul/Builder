@@ -19,6 +19,7 @@ export class Constants {
     public static get updateFlowCompUrl(): string { return '/flow_component/update'; }
     public static get getAllFlowComponentUrl(): string { return '/flow_component/getall'; }
 
+
     // Generation Flow apis
     public static get getAllGenFlowsUrl(): string { return '/generation_flow/getall'; }
     public static get addGenFlowsUrl(): string { return '/generation_flow/add'; }

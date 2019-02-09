@@ -26,7 +26,11 @@ export class ComponentFlowsService {
   }
 
   updateGenFlow(flow): Observable<any> {
-    return this.api.put(this.restapi.mflowbaseUrl + Constants.updateGenFlowsUrl, flow);
+    return this.api.put(this.restapi.flowbaseUrl + Constants.updateGenFlowsUrl, flow);
+  }
+
+  saveFlowComponent(flow): Observable<any> {
+    return this.api.post(this.restapi.flowbaseUrl + Constants.addFlowCompUrl, flow);
   }
 
   updateMicroFlow(flow): Observable<any> {
@@ -38,11 +42,15 @@ export class ComponentFlowsService {
   }
 
   deleteMicroFlow(id): Observable<any> {
-    return this.api.delete(this.restapi.mflowbaseUrl + Constants.deleteFlowUrl + id);
+    return this.api.delete(this.restapi.mflowbaseUrl + Constants.deleteMicroFlowUrl + id);
+  }
+
+  getFlowGenComponentByName(name): Observable<any> {
+    return this.api.get(this.restapi.flowbaseUrl + Constants.getGenFlowsByCompNameUrl + name);
   }
 
   getMicroFlowByCompName(name): Observable<any> {
-    return this.api.get(this.restapi.projbaseUrl + Constants.getMicroFlowsByCompNameUrl + name);
+    return this.api.get(this.restapi.mflowbaseUrl + Constants.getMicroFlowsByCompNameUrl + name);
   }
   
 
