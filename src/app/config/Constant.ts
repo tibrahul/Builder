@@ -32,6 +32,16 @@ export class Constants {
     public static get deleteMicroFlowUrl(): string { return '/microflow/delete/'; }
     public static get getMicroFlowsByCompNameUrl(): string { return '/microflow/getbycomp/'; }
 
+    //Connector
+    public static get getAllConnector(): string { return '/connector/getall' ;}
+    public static get addConnector(): string { return '/connector/add' ;}
+    public static get upadateConnector(): string { return '/connector/update' ;}
+    public static get deleteConnector(): string { return '/connector/delete/' ;}
+    
+    
+    
+
+
     
 
     

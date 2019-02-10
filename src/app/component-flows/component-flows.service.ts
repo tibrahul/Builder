@@ -41,6 +41,19 @@ export class ComponentFlowsService {
     return this.api.post(this.restapi.mflowbaseUrl + Constants.addMicroFlowUrl, proj);
   }
 
+  saveConnector(connector): Observable<any> {
+    return this.api.post(this.restapi.flowbaseUrl + Constants.addConnector, connector);
+  }
+
+  updateConnector(connector): Observable<any> {
+    return this.api.put(this.restapi.flowbaseUrl + Constants.upadateConnector, connector);
+  }
+
+  deleteConnector(id): Observable<any> {
+    return this.api.delete(this.restapi.flowbaseUrl + Constants.deleteConnector + id);
+  }
+
+
   deleteMicroFlow(id): Observable<any> {
     return this.api.delete(this.restapi.mflowbaseUrl + Constants.deleteMicroFlowUrl + id);
   }
@@ -53,5 +66,8 @@ export class ComponentFlowsService {
     return this.api.get(this.restapi.mflowbaseUrl + Constants.getMicroFlowsByCompNameUrl + name);
   }
   
+  getAllConnector(): Observable<any> {
+    return this.api.get(this.restapi.flowbaseUrl + Constants.getAllConnector);
+  }
 
 }
