@@ -69,7 +69,7 @@ export class ComponentFlowsComponent implements OnInit {
   createFlowComponentModel: FormGroup;
   createMFlowForm: FormGroup;
   createConnectorForm: FormGroup;
-  isCreateModel: Boolean = true;
+  isCreateModel: Boolean = false;
   showConnectors: boolean;
   gridOptions;
   addToMicroFlow: Boolean = null;
@@ -150,6 +150,7 @@ export class ComponentFlowsComponent implements OnInit {
   }
 
   onCloseHandled() {
+    this.isCreateModel = false;
     this.createFlowComponentModel.clearValidators();
     this.createFlowComponentModel.reset();
     this.addModel = 'none';
@@ -157,6 +158,7 @@ export class ComponentFlowsComponent implements OnInit {
 
   onCloseMFHandled() {
     this.addToMicroFlow = null
+    this.isUpdateMF = false;
     this.createMFlowForm.clearValidators();
     this.createMFlowForm.reset();
     this.addMFModel = 'none';
@@ -223,7 +225,7 @@ export class ComponentFlowsComponent implements OnInit {
   }
 
   updateRow() {
-    this.isCreateModel = false;
+    this.isCreateModel = true;
     this.iFlowComponent = this.selectedFlow[0];
     this.openAddModal();
   }
